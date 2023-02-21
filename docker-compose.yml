@@ -1,0 +1,47 @@
+version: '3'
+services:
+
+  api-gateway:
+    container_name: gateway
+    build:
+      context: ./app/api/gateway
+      target: deps
+    command: "pnpm start:dev"
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./app/api/user/:/usr/src/app/
+    networks:
+      - frontend
+      - api
+
+  userapi:
+    container_name: apiUser
+    build:
+      context: ./app/api/user
+      target: deps
+    command: "pnpm start:dev"
+    ports:
+      - "4001:3000"
+    volumes:
+      - ./app/api/user/:/usr/src/app/
+    networks:
+      - api
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./app/frontend
+      target: deps
+    command: "pnpm dev"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/frontend/:/usr/src/app/
+    networks:
+      - frontend
+
+
+networks:
+  frontend:
+  api:
