@@ -10,7 +10,7 @@ services:
     ports:
       - "3001:3000"
     volumes:
-      - ./app/api/user/:/usr/src/app/
+      - ./app/api/gateway/:/usr/src/app/
     networks:
       - frontend
       - api
@@ -40,7 +40,6 @@ services:
       - ./app/frontend/:/usr/src/app/
     networks:
       - frontend
-
 
 networks:
   frontend:
