@@ -10,18 +10,13 @@ on:
       - main
       - develop
 jobs:
-  install-dependencies:
-    name: 'Installing dependencies'
+  build-web:
+  build-api:
+    name: 'Build'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6.32.9
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
-      - name: Pnpm install dependencies
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/workflows/composite-action
+  test-api:
+    needs: build-api
+  test-web:
+    needs: build-web
