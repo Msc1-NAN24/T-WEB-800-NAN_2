@@ -23,10 +23,12 @@ jobs:
   test-api:
     name: "Testing api"
     needs: build-api-gateway
+    runs-on: ubuntu-latest
     steps:
       - run: echo Testing api
   test-web:
     name: "Testing web"
     needs: build-web
+    runs-on: ubuntu-latest
     steps:
       - run: echo Testing web
