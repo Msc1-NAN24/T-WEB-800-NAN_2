@@ -87,16 +87,19 @@ jobs:
     steps:
       - run: echo Testing web
   build-service:
-    name: "Build microservice {{matrix.name}}"
+    name: "Build microservice"
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        - name: "Hotel"
-          folder: "./app/api/hotel"
-        - name: "User"
-          folder: "./app/api/user"
+        services: [
+          {name: "Hotel", folder: "./app/api/hotel"},
+          {name: "Hotel", folder: "./app/api/user"}
+        ]
     steps:
-      - run: echo Build {{matrix.name}} microservice ({{matrix.folder}})
+      - run: echo Build $SERVICE_NAME microservice ($SERVICE_FOLDER)
+        env:
+          SERVICE_NAME: ${{ matrix.services.name }}
+          SERVICE_FOLDER: ${{ matrix.services.folder }}
   deploy-services:
     name: "Deploy microservices"
     needs: [build-service]
