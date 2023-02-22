@@ -11,12 +11,22 @@ on:
       - develop
 jobs:
   build-web:
-  build-api:
-    name: 'Build'
+    name: "Build web application"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/composite-action
+  build-api-gateway:
+    name: 'Build api gateway'
     runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/composite-action
   test-api:
-    needs: build-api
+    name: "Testing api"
+    needs: build-api-gateway
+    steps:
+      - run: echo Testing api
   test-web:
+    name: "Testing web"
     needs: build-web
+    steps:
+      - run: echo Testing web
