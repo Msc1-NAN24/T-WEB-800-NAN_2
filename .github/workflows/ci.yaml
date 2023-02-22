@@ -45,10 +45,17 @@ jobs:
     needs: build-api-gateway
     runs-on: ubuntu-latest
     steps:
-      - run: echo Testing api
+      - name: pnpm test
+        working-directory: ./app/api/gateway
+        run: pnpm test
   test-web:
     name: "Testing web"
     needs: build-web
     runs-on: ubuntu-latest
     steps:
       - run: echo Testing web
+  deploy-apps:
+    needs: [test-api, test-web]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Deploy applications ...
