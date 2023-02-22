@@ -86,7 +86,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo Testing web
+  build-service:
+    name: "Build microservice {{matrix.name}}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        - name: "Hotel"
+          folder: "./app/api/hotel"
+        - name: "User"
+          folder: "./app/api/user"
+    steps:
+      - run: echo Build {{matrix.name}} microservice ({{matrix.folder}})
+  deploy-services:
+    name: "Deploy microservices"
+    needs: [build-service]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Deploy microservices ...
   deploy-apps:
+    name: "Deploy applications (frontend and api-gateway)"
     needs: [test-api, test-web]
     runs-on: ubuntu-latest
     steps:
