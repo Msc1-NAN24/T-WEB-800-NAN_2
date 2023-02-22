@@ -24,6 +24,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
       - name: Pnpm install dependencies
+        working-directory: ./app/frontend
         run: pnpm install --frozen-lockfile
       - name: Build web app
         working-directory: ./app/frontend
@@ -48,6 +49,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
       - name: Install dependencies
+        working-directory: ./app/api/gateway
         run: pnpm install --frozen-lockfile
       - name: Build api
         working-directory: ./app/api/gateway
@@ -63,6 +65,18 @@ jobs:
     needs: build-api-gateway
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: ./app/api/gateway
       - name: pnpm test
         working-directory: ./app/api/gateway
         run: pnpm test
