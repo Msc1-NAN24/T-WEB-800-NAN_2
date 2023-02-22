@@ -93,10 +93,10 @@ jobs:
       matrix:
         services: [
           {name: "Hotel", folder: "./app/api/hotel"},
-          {name: "Hotel", folder: "./app/api/user"}
+          {name: "User", folder: "./app/api/user"}
         ]
     steps:
-      - run: echo Build $SERVICE_NAME microservice ($SERVICE_FOLDER)
+      - run: "echo Build $SERVICE_NAME microservice ($SERVICE_FOLDER)"
         env:
           SERVICE_NAME: ${{ matrix.services.name }}
           SERVICE_FOLDER: ${{ matrix.services.folder }}
