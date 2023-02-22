@@ -95,12 +95,9 @@ jobs:
           {name: "User", folder: "./app/api/user"}
         ]
     steps:
-      - run: "echo Build $SERVICE_NAME microservice - $SERVICE_FOLDER"
-        env:
-          SERVICE_NAME: ${{ matrix.services.name }}
-          SERVICE_FOLDER: ${{ matrix.services.folder }}
+      - run: "echo Build ${{ matrix.services.name }} microservice - ${{ matrix.services.folder }}"
       - name: "Building dependencies"
-        working-directory: $SERVICE_FOLDER
+        working-directory: ${{ matrix.services.folder }}
         run: pnpm install --frozen-lockfile
   deploy-services:
     name: "Deploy microservices"
