@@ -3,7 +3,6 @@ description: "Install app pnpm dependencies"
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v3
     - uses: pnpm/action-setup@v2
       with:
         version: 6.32.9

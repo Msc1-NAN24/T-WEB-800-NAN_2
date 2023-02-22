@@ -14,12 +14,14 @@ jobs:
     name: "Build web application"
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite-action
+      - uses: actions/checkout@v3
+      - uses: .github/workflows/composite-action
   build-api-gateway:
     name: 'Build api gateway'
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite-action
+      - uses: actions/checkout@v3
+      - uses: .github/workflows/composite-action
   test-api:
     name: "Testing api"
     needs: build-api-gateway
