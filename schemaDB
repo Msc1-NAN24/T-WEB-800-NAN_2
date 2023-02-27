@@ -1,0 +1,210 @@
+[
+  {
+    "schemaType": "Collection",
+    "name": "User",
+    "type": "ObjectId",
+    "required": true,
+    "unique": true,
+    "defaultValue": "",
+    "description": "",
+    "index": 0,
+    "customProps": [],
+    "fields": [
+      {
+        "schemaType": "Field",
+        "name": "_id",
+        "type": "ObjectId",
+        "required": true,
+        "unique": true,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "name",
+        "type": "String",
+        "required": true,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "email",
+        "type": "String",
+        "required": true,
+        "unique": true,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "password",
+        "type": "String",
+        "required": true,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "firstname",
+        "type": "String",
+        "required": true,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "lastname",
+        "type": "String",
+        "required": true,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "phone",
+        "type": "String",
+        "required": false,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "picture",
+        "type": "String",
+        "required": false,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "created_at",
+        "type": "Date",
+        "required": false,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "updated_at",
+        "type": "Date",
+        "required": false,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      }
+    ]
+  },
+  {
+    "schemaType": "Collection",
+    "name": "Travel",
+    "defaultValue": "",
+    "description": "",
+    "fields": [
+      {
+        "schemaType": "Field",
+        "name": "_id",
+        "type": "ObjectId",
+        "required": true,
+        "unique": true,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "owner",
+        "type": "ObjectId",
+        "required": true,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "name",
+        "type": "String",
+        "required": true,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "shareable",
+        "type": "Boolean",
+        "required": false,
+        "unique": false,
+        "defaultValue": "false",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "services",
+        "type": "Array",
+        "required": false,
+        "unique": false,
+        "defaultValue": "[]",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "created_at",
+        "type": "Date",
+        "required": false,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      },
+      {
+        "schemaType": "Field",
+        "name": "updated_at",
+        "type": "Date",
+        "required": false,
+        "unique": false,
+        "defaultValue": "",
+        "description": "",
+        "index": 0,
+        "customProps": []
+      }
+    ]
+  }
+]
