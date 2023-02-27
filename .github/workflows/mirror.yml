@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  to_gitlab:
+  mirror:
     runs-on: ubuntu-latest
     steps:                                              # <-- must use actions/checkout before mirroring!
       - uses: actions/checkout@v3
