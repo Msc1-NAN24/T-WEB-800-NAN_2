@@ -93,7 +93,8 @@ jobs:
       matrix:
         services: [
           {name: "User", folder: "./app/api/user"},
-          {name: "Events", folder: "./app/api/events"}
+          {name: "Events", folder: "./app/api/events"},
+          {name: "Travel", folder: "./app/api/travel"}
         ]
     steps:
       - uses: actions/checkout@v3
@@ -120,7 +121,8 @@ jobs:
       matrix:
         services: [
           { name: "User", folder: "./app/api/user" },
-          { name: "Events", folder: "./app/api/events" }
+          { name: "Events", folder: "./app/api/events" },
+          {name: "Travel", folder: "./app/api/travel"}
         ]
     steps:
       - uses: actions/checkout@v3
