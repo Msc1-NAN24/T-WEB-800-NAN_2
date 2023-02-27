@@ -32,19 +32,40 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
+  travelapi:
+    container_name: travelapi
+    build:
+      context: ./app/api/travel
+      target: deps
+    command: "pnpm start:dev"
+    ports:
+      - "4002:3000"
+    volumes:
+      - ./app/api/travel/:/usr/src/app/
+    networks:
+      - api
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
   frontend:
     container_name: frontend
     build:
       context: ./app/frontend
       target: deps
     command: "pnpm dev"
+    depends_on:
+      - mongo
     ports:
       - "3000:3000"
     volumes:
       - ./app/frontend/:/usr/src/app/
     networks:
       - frontend
-  
+
   mongo:
     image: mongo
     restart: always
