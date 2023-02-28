@@ -1,15 +1,17 @@
 import React from "react";
 import '../styles/globals.css';
 
-export default function DashboardLayout({children}: {
+export default function RootLayout({children}: {
   children: React.ReactNode,
 }) {
   return (
-    <html data-theme="light">
-      <section>
-        <nav></nav>
-        {children}
-      </section>
+    <html lang="fr" data-theme="light">
+      <head>
+        <title>Travel</title>
+      </head>
+      <body>
+      {children}
+      </body>
     </html>
   );
 }

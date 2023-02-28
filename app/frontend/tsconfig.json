@@ -38,7 +38,5 @@
   ],
   "exclude": [
     "node_modules",
-    "cypress",
-    "**/*.cy.tsx"
-  ]
+  ],
 }

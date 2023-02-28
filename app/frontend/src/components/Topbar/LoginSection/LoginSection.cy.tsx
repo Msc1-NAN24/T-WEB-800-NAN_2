@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginAvatar from './LoginAvatar'
+import LoginSection from './LoginSection'
 
 const mockedUser = {
   email: 'matheo.bellanger@gmail.com',
@@ -12,18 +12,17 @@ const mockedUser = {
 
 describe('Not logged <LoginAvatar />', () => {
   it('renders', () => {
-    cy.mount(<LoginAvatar user={undefined}/>);
+    cy.mount(<LoginSection user={undefined}/>);
 
     cy.get('.login-buttons')
       .should('be.visible');
-
   });
 })
 
 
 describe('Logged <LoginAvatar />', () => {
   it('renders', () => {
-    cy.mount(<LoginAvatar user={mockedUser}/>);
+    cy.mount(<LoginSection user={mockedUser}/>);
 
     cy.get('.user-avatar')
       .should('be.visible')
