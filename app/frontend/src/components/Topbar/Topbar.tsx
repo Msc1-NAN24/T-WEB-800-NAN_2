@@ -7,7 +7,7 @@ export default function Topbar() {
         Topbar
       </h1>
       <ul>
-        <li>Hello</li>
+        <li>Accueil</li>
       </ul>
     </>
 
