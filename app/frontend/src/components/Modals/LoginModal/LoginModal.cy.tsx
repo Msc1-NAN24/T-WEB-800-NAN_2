@@ -22,5 +22,8 @@ describe('<LoginModal />', () => {
         cy.get('button')
             .should('contain.text', 'Se connecter')
             .click();
+        cy.get('a')
+            .should('be.visible')
+            .should('contain.text', 'Vous n\'avez pas de compte ? inscrivez-vous ici')
     })
 })

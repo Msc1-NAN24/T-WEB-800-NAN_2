@@ -1,4 +1,5 @@
 import RegisterModal from "./RegisterModal";
+import { should } from 'chai';
 
 describe('<RegisterModal />', () => {
     it('renders', () => {
@@ -35,5 +36,9 @@ describe('<RegisterModal />', () => {
         cy.get('button')
             .should('contain.text', 'S\'inscrire')
             .click();
+        cy.get('a')
+            .should('be.visible')
+            .should('contain.text', 'Vous avez déjà un compte? connectez-vous ici')
+
     })
 })

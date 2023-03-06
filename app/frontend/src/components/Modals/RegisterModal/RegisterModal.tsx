@@ -19,7 +19,8 @@ export default function RegisterModal() {
         <label>Mot de passe*</label><br />
         <input type="password" name="" id="" />
       </div>
-      <button>S'inscrire</button>
+      <button>S'inscrire</button><br />
+      <a href="">Vous avez déjà un compte? connectez-vous ici</a>
     </>
   )
 }

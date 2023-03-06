@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 export default function LoginModal() {
   return (
     <>
@@ -10,7 +11,8 @@ export default function LoginModal() {
         <label>Mot de passe</label><br />
         <input type="password" name="" id="" />
       </div>
-      <button>Se connecter</button>
+      <button>Se connecter</button><br />
+      <a href="">Vous n'avez pas de compte ? inscrivez-vous ici</a>
     </>
   )
 }
