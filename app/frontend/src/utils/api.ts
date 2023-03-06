@@ -2,7 +2,6 @@ import {getEnv} from "@/utils/env";
 import {Result} from "@/utils/type";
 
 export const buildApiUrl = (suffix: string) => {
-  console.log(process.env);
   return new URL(suffix, getEnv('API_URL')).href
 };
 
