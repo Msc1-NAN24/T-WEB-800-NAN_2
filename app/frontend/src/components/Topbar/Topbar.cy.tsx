@@ -14,6 +14,8 @@ describe('<Topbar />', () => {
     cy.url()
       .should('contain', '/');
 
-    cy.find('img').should('cont.attr', 'src').should('have.attr', 'title');
+    cy.get('div').find('img').should('have.attr', 'src');
+
+    cy.get('div').find('img').should('have.attr', 'title');
   })
 })

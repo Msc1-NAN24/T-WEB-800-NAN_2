@@ -4,7 +4,7 @@
 
 export default function Topbar() {
   return (
-    <>
+    <div>
       <h1>
         Topbar
       </h1>
@@ -12,7 +12,7 @@ export default function Topbar() {
         <li>Accueil</li>
       </ul>
       <img src="" title="" />
-    </>
+    </div>
 
   )
 }
