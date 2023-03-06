@@ -1,3 +1,6 @@
+export {}
+
+
 import React from 'react'
 import LoginSection from './LoginSection'
 import {User} from "@/utils/type";
