@@ -3,10 +3,10 @@
 import LoginSection, {AvailableButton} from "@/components/Topbar/LoginSection/LoginSection";
 import {useContext} from "react";
 import {UserContext} from "@/contexts/UserContext";
-import {useRouter} from "next/navigation";
 import {useModals} from "@/hooks/useModals";
 import LoginModal from "@/components/Modals/LoginModal/LoginModal";
 import RegisterModal from "@/components/Modals/RegisterModal/RegisterModal";
+import {useRouter} from "next/router";
 
 type Modals = {
   login: boolean,
@@ -18,7 +18,6 @@ export default function Topbar() {
   const router = useRouter();
   const {login, register, updateModals, updateAllModals} = useModals<Modals>({login: false, register: false});
   const ctx = useContext(UserContext);
-
 
   const onClickRegister = () => {
     updateAllModals({login: false, register: true});

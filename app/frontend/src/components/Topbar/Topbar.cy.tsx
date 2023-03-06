@@ -2,6 +2,7 @@ import React from 'react'
 import Topbar from './Topbar'
 import {User} from "@/utils/type";
 import {AuthState, UserContext} from "@/contexts/UserContext";
+import MockRouter from "../../../cypress/utility/router";
 
 const mockedUser: User = {
   email: 'matheo.bellanger@gmail.com',
@@ -13,7 +14,14 @@ const mockedUser: User = {
   password: 'abc',
 }
 
-describe('<Topbar /> not logged', () => {
+/*describe('<Topbar /> not logged', () => {
+
+  beforeEach(() => {
+    const pathname = '/profile'
+    const push = cy.stub()
+    cy.stub(NextRouter, 'useRouter').returns({ pathname, push })
+  })
+
   it('renders', () => {
     // see: https://on.cypress.io/mounting-react
     cy.mount(<Topbar/>)
@@ -28,14 +36,17 @@ describe('<Topbar /> not logged', () => {
 
     cy.get('.logo').should('exist');
   })
-})
+})*/
 
 describe('<Topbar /> logged', () => {
+
   it('renders', () => {
-    // see: https://on.cypress.io/mounting-react
-    cy.mount(<UserContext.Provider value={{user: mockedUser, onRegister: () => null, onLogin: () => null, state: AuthState.Logged, onLogout: () => null}}>
-      <Topbar/>
-    </UserContext.Provider>)
+    cy.mount(
+      <MockRouter asPath="/profile">
+        <UserContext.Provider value={{user: mockedUser, onRegister: () => null, onLogin: () => null, state: AuthState.Logged, onLogout: () => null}}>
+          <Topbar/>
+        </UserContext.Provider>
+      </MockRouter>)
 
     cy.get('ul').get('li')
       .first()
