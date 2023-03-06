@@ -12,6 +12,11 @@ const mockedBadPassword = {
 }
 
 describe('<LoginModal /> - Click on "se connecter"', function () {
+
+  before(() => {
+    process.env.API_URL = 'https://localhost:4000';
+  })
+
   it('Should be logged !', () => {
     const onSuccessSpy = cy.spy().as('onSuccessSpy');
     cy.mount(<LoginModal open onDismiss={() => {}} onSuccess={onSuccessSpy}/>);
@@ -34,7 +39,7 @@ describe('<LoginModal /> - Click on "se connecter"', function () {
     cy.get('.modal-login-btn').click();
 
     cy.get('.modal-email-error').should('be.visible');
-    cy.get('.modal-password-error').should('not.be.visible');
+    cy.get('.modal-password-error').should('not.exist');
     cy.get('@onSuccessSpy').should('not.have.been.called');
   });
 
@@ -49,8 +54,8 @@ describe('<LoginModal /> - Click on "se connecter"', function () {
 
     cy.get('.modal-login-btn').click();
 
-    cy.get('.modal-email-error').should('not.be.visible');
-    cy.get('.modal-password-error').should('be.visible');
+    cy.get('.modal-email-error').should('not.exist');
+    cy.get('.modal-password-error').should('not.exist');
     cy.get('@onSuccessSpy').should('not.have.been.called');
   });
 

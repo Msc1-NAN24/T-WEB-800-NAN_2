@@ -17,7 +17,7 @@ export default function Modal(props: React.PropsWithChildren<ModalProps>) {
   })
 
   return (
-    <div>
+    <div className={"z-50"}>
       <input type="checkbox" id="my-modal-4" className="modal-toggle"/>
       <label htmlFor="my-modal-4" className={`modal ${props.open ? 'modal-open' : ''}`}>
         <label className="modal-box relative"  ref={modalRef}>

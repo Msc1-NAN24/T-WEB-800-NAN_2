@@ -2,6 +2,7 @@ name: Building, Testing and Deploying project
 on:
   push:
     branches:
+      - feat/web_tdd
       - develop
       - feat/ci
   pull_request:
@@ -85,7 +86,21 @@ jobs:
     needs: build-web
     runs-on: ubuntu-latest
     steps:
-      - run: echo Testing web
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - name: Pnpm install dependencies
+        working-directory: ./app/frontend
+        run: pnpm install --frozen-lockfile
+      - name: Testing frontend components
+        working-directory: ./app/frontend
+        run: pnpm test:ci
   build-services:
     name: "Build microservice"
     runs-on: ubuntu-latest
