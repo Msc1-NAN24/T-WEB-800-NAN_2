@@ -6,7 +6,7 @@ import {UserContext} from "@/contexts/UserContext";
 import {useModals} from "@/hooks/useModals";
 import LoginModal from "@/components/Modals/LoginModal/LoginModal";
 import RegisterModal from "@/components/Modals/RegisterModal/RegisterModal";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 
 type Modals = {
   login: boolean,

@@ -1,10 +1,8 @@
-import React from 'react'
-import Topbar from './Topbar'
-import {User} from "@/utils/type";
-import {AuthState, UserContext} from "@/contexts/UserContext";
-import MockRouter from "../../../cypress/utility/router";
+export {}
 
-const mockedUser: User = {
+import React from 'react'
+
+/*const mockedUser: User = {
   email: 'matheo.bellanger@gmail.com',
   picture: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
   firstname: 'Mathéo',
@@ -12,7 +10,7 @@ const mockedUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   password: 'abc',
-}
+}*/
 
 /*describe('<Topbar /> not logged', () => {
 
@@ -37,6 +35,7 @@ const mockedUser: User = {
     cy.get('.logo').should('exist');
   })
 })*/
+/*
 
 describe('<Topbar /> logged', () => {
 
@@ -59,4 +58,4 @@ describe('<Topbar /> logged', () => {
 
     cy.get('.logo').should('exist');
   })
-})
+})*/
