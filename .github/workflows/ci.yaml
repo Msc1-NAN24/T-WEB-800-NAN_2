@@ -140,7 +140,7 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: "Test service"
         working-directory: ${{ matrix.services.folder }}
-        run: pnpm run test --detectOpenHandles --forceExit
+        run: pnpm run test --forceExit
   deploy-services:
     name: "Deploy microservices"
     needs: [build-services, test-services]
