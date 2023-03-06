@@ -128,7 +128,7 @@ jobs:
         working-directory: ${{ matrix.services.folder }}
         run: pnpm build
   test-services:
-    name: "Build microservice"
+    name: "Test microservice"
     runs-on: ubuntu-latest
     needs: [build-services]
     strategy:
@@ -152,9 +152,9 @@ jobs:
       - name: "Building dependencies"
         working-directory: ${{ matrix.services.folder }}
         run: pnpm install --frozen-lockfile
-      - name: "Build service"
+      - name: "Test service"
         working-directory: ${{ matrix.services.folder }}
-        run: pnpm test
+        run: pnpm test:ci
   deploy-services:
     name: "Deploy microservices"
     needs: [build-services, test-services]
