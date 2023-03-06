@@ -2,7 +2,6 @@ name: Building, Testing and Deploying project
 on:
   push:
     branches:
-      - feat/web_tdd
       - develop
       - feat/ci
   pull_request:
