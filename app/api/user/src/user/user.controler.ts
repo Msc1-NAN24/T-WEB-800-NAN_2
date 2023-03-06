@@ -7,8 +7,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { UserService } from './user.servcie';
-import { User } from '../schemas/user.schema';
+import { UserService } from './user.service';
+import { User } from './model/user.schema';
 
 @Controller('user')
 export class UserController {

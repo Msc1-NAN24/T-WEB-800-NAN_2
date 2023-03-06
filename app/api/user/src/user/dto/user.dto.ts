@@ -3,6 +3,6 @@ export interface createUserDto {
   firstName: string;
   email: string;
   password: string;
-  phone?: string;
+  phone: string;
   picture?: string;
 }

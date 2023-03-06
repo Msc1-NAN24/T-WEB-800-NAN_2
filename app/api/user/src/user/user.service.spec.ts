@@ -1,14 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
+import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/schemas/user.schema';
-import { UserService } from './user.servcie';
+import { User, UserDocument, UserSchema } from './model/user.schema';
+import { UserService } from './user.service';
+import {
+  closeInMongodConnection,
+  rootMongooseTestModule,
+} from '../test-utils/mongo/MongooseTestModule';
 
 const mockUser = {
   lastName: 'lastName #1',
   firstName: 'firstName #1',
   email: 'email #1',
   password: 'password #1',
+  phone: '555 01',
 };
 
 describe('UsersService', () => {
@@ -21,79 +26,83 @@ describe('UsersService', () => {
       firstName: 'firstName #1',
       email: 'email #1',
       password: 'password #1',
+      phone: '555 01',
     },
     {
       lastName: 'lastName #2',
       firstName: 'firstName #2',
       email: 'email #2',
       password: 'password #2',
+      phone: '555 02',
     },
   ];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        UserService,
-        {
-          provide: getModelToken('User'),
-          useValue: {
-            new: jest.fn().mockResolvedValue(mockUser),
-            constructor: jest.fn().mockResolvedValue(mockUser),
-            find: jest.fn(),
-            create: jest.fn(),
-            exec: jest.fn(),
-          },
-        },
+      imports: [
+        rootMongooseTestModule(),
+        MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
       ],
+      providers: [UserService],
     }).compile();
 
     service = module.get<UserService>(UserService);
     model = module.get<Model<User>>(getModelToken('User'));
   });
 
+  afterAll(async () => {
+    await closeInMongodConnection();
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+  it('should create user in DB', async () => {
+    const res = await service.create(mockUser);
 
-  it('should return all users', async () => {
-    jest.spyOn(model, 'find').mockReturnValue({
-      exec: jest.fn().mockResolvedValueOnce(usersArray),
-    } as any);
-    const users = await service.findAll();
-    expect(users).toEqual(usersArray);
+    expect(res._id.toString().length).toEqual(24);
+    expect(res).toEqual(expect.objectContaining(mockUser));
   });
 
-  it('should insert a new cat', async () => {
-    jest.spyOn(model, 'create').mockImplementationOnce(() =>
-      Promise.resolve({
+  it('should be update user', async () => {
+    const user = await service.create(mockUser);
+    const res = await service.updateUser(user._id, {
+      email: 'update@email.fr',
+    });
+
+    expect(res.email).toEqual('update@email.fr');
+  });
+
+  it('should find all user', async () => {
+    await model.create(usersArray[0]);
+    await model.create(usersArray[1]);
+
+    const res = await service.findAll();
+    expect(res.length).toEqual(2);
+  });
+
+  it('should find one user', async () => {
+    const user = await model.create(usersArray[0]);
+    await model.create(usersArray[1]);
+
+    const res = await service.findOne({ _id: user._id });
+    expect(res).toEqual(
+      expect.objectContaining({
         lastName: 'lastName #1',
         firstName: 'firstName #1',
         email: 'email #1',
-        password: 'password #1',
+        phone: '555 01',
       }),
     );
-    const newUser = await service.create({
-      lastName: 'lastName #1',
-      firstName: 'firstName #1',
-      email: 'email #1',
-      password: 'password #1',
-    });
-    expect(newUser).toEqual(mockUser);
   });
 
-  // it('should update a user', async () => {
-  //   jest
-  //     .spyOn(model, 'findOneAndUpdate')
-  //     .mockImplementationOnce(
-  //       (): Promise<
-  //         Document<unknown, any, User> &
-  //           Omit<User & { _id: Types.ObjectId }, never> &
-  //           Required<{ _id: Types.ObjectId }>
-  //       > => {},
-  //     );
-  //   const newUser = await service.updateUser('1', {
-  //     lastName: 'update #1',
-  //   });
-  //   expect(newUser).toEqual(mockUser);
-  // });
+  it('should find delete user', async () => {
+    const deleteUser: UserDocument = await model.create(usersArray[0]);
+    const user = await model.create(usersArray[1]);
+
+    await service.delete(deleteUser._id);
+    const res = await service.findAll();
+    expect(res.length).toEqual(1);
+    expect(res[0]._id).toEqual(user._id);
+  });
 });
