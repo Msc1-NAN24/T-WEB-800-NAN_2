@@ -114,7 +114,7 @@ jobs:
         working-directory: ${{ matrix.services.folder }}
         run: pnpm build
   test-services:
-    name: "Build microservice"
+    name: "Test microservice"
     runs-on: ubuntu-latest
     needs: [build-services]
     strategy:
