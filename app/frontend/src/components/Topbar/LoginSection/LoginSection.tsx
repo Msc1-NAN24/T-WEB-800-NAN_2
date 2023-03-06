@@ -41,5 +41,4 @@ export default function LoginSection({user, onClickButton}: LoginAvatarProps) {
       </div>
     )
   }
-  return (<h1>Login avatar</h1>)
 }
