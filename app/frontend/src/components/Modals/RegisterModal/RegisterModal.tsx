@@ -3,14 +3,22 @@ export default function RegisterModal() {
   return (
     <>
       <h1>RegisterModal</h1>
-      <label htmlFor="">Nom</label>
-      <input type="text" name="" id="nom" />
-      <label htmlFor="">Prénom</label>
-      <input type="text" name="" id="prénom" />
-      <label>Email</label>
-      <input type="email" name="" id="" />
-      <label>Mot de passe</label>
-      <input type="password" name="" id="" />
+      <div>
+        <label htmlFor="">Nom*</label><br />
+        <input type="text" name="" id="nom" />
+      </div>
+      <div>
+        <label htmlFor="">Prénom*</label><br />
+        <input type="text" name="" id="prénom" />
+      </div>
+      <div>
+        <label>Email*</label><br />
+        <input type="email" name="" id="" />
+      </div>
+      <div>
+        <label>Mot de passe*</label><br />
+        <input type="password" name="" id="" />
+      </div>
       <button>S'inscrire</button>
     </>
   )
