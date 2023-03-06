@@ -13,13 +13,11 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
-import './commands'
-
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-import { mount } from 'cypress/react18'
+import { mount } from 'cypress/react18';
+import '../../src/styles/globals.css';
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.

@@ -1,15 +1,25 @@
 import React from "react";
 import '../styles/globals.css';
+import {Poppins} from "@next/font/google";
+import {UserContextProvider} from "@/contexts/UserContext";
 
-export default function DashboardLayout({children}: {
+const poppins = Poppins({
+  weight: '400',
+})
+
+export default function RootLayout({children}: {
   children: React.ReactNode,
 }) {
   return (
-    <html data-theme="light">
-      <section>
-        <nav></nav>
+    <html className={poppins.className} lang="fr" data-theme="light">
+      <head>
+        <title>Travel</title>
+      </head>
+      <body>
+      <UserContextProvider>
         {children}
-      </section>
+      </UserContextProvider>
+      </body>
     </html>
   );
 }

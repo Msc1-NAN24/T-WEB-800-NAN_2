@@ -1,3 +1,12 @@
+import Map from "@/components/Map/Map";
+import Topbar from "@/components/Topbar/Topbar";
+
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>;
+
+  return (
+    <>
+      <Topbar/>
+      <Map/>
+    </>
+  )
 }
