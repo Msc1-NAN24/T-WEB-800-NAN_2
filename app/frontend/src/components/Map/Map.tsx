@@ -18,7 +18,7 @@ export default function Map(props: MapProps) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDwt-rwnOcbEnC_bRt8kOz1RA2QaMZffTc"
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_TOKEN ?? '',
   })
 
   const [_, setMap] = React.useState(null)
