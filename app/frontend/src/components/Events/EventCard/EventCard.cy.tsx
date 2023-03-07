@@ -3,7 +3,7 @@ import { should } from 'chai';
 
 describe('<EventCard />', () => {
     it('renders', () => {
-        cy.mount(<EventCard />)
+        cy.mount(<EventCard title={""} date={""} lieu={""} description={""} />)
 
         //cy.get(img)
 
