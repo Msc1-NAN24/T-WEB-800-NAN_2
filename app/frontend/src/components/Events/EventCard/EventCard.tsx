@@ -1,10 +1,17 @@
-export default function EventCard() {
+interface EventsProps {
+  title: string,
+  date: string,
+  lieu: string,
+  description: string
+}
+
+export default function EventCard(props: EventsProps) {
   return (
     <>
-      <h1>Events</h1>
-      <h3>Atelier maison: créer ses pâtisseries</h3>
-      <p>21 janvier à 16h - Nantes, commerce</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur convallis eu magna ac lacinia. Quisque scelerisque neque sit amet dignissim sodales.</p>
+      <h1>EventCard</h1>
+      <h3>{props.title}</h3>
+      <p>{props.date} - {props.lieu}</p>
+      <p>{props.description}</p>
     </>
   );
 }
