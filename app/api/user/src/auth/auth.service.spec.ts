@@ -84,4 +84,10 @@ describe('auth service', () => {
     expect(typeof res.access_token).toEqual('string');
     expect(res.user).toBeInstanceOf(model<User>);
   });
+
+  it('should create user and return jwt', async () => {
+    const res = await service.register(userMock);
+    expect(typeof res.access_token).toEqual('string');
+    expect(res.user).toBeInstanceOf(model<User>);
+  });
 });
