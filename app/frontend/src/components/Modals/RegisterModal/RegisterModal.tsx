@@ -34,6 +34,8 @@ export default function RegisterModal(props: RegisterModalProps) {
         }
       });
     }).catch(errors => {
+      if (errors === undefined || errors.length <= 0)
+        return;
       errors.forEach((err: ValidationError) => {
         setError(err.property as keyof Form, {message: Object.values(err.constraints ?? {}).join(', ')});
       });
