@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - develop
-      - feat/places_service
       - feat/ci
   pull_request:
     types: [opened, reopened, edited, synchronize]
