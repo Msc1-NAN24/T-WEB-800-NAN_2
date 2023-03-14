@@ -22,7 +22,8 @@ export class RestaurantService {
         minprice: params.minprice,
         type: 'restaurant',
       }
-    })
+    });
+    /*return this.client.placesNearby()*/
   }
 
 }
