@@ -6,10 +6,12 @@ import LoginSection from './LoginSection'
 import {User} from "@/utils/type";
 
 const mockedUser: User = {
+  _id: 'idabc',
+  phone: '1234567890',
   email: 'matheo.bellanger@gmail.com',
   picture: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-  firstname: 'Mathéo',
-  lastname: 'Bellanger',
+  firstName: 'Mathéo',
+  lastName: 'Bellanger',
   created_at: new Date(),
   updated_at: new Date(),
   password: 'abc',

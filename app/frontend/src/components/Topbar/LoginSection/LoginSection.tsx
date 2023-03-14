@@ -21,7 +21,7 @@ export default function LoginSection({user, onClickButton}: LoginAvatarProps) {
           <label tabIndex={0}>
             <div className="avatar cursor-pointer">
               <div className="w-12 rounded">
-                <img className={"user-avatar"} title={`${user.firstname} ${user.lastname}`} src={user.picture} alt={user.email}/>
+                <img className={"user-avatar"} title={`${user.firstName} ${user.lastName}`} src={user.picture} alt={user.email}/>
               </div>
             </div>
           </label>
