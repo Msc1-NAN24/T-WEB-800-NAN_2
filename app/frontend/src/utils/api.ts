@@ -2,7 +2,7 @@ import {Result} from "@/utils/type";
 import * as process from "process";
 
 export const buildApiUrl = (suffix: string, params?: URLSearchParams) => {
-  return new URL(suffix, process.env.NEXT_PUBLIC_API_URL).href + ('?' + params?.toString() ?? '');
+  return new URL(suffix, process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/').href + ('?' + params?.toString() ?? '');
 };
 
 export class API {
