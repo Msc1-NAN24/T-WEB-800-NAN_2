@@ -26,7 +26,9 @@ export default function LoginModal(props: LoginModalProps) {
     clearErrors();
     const body = new LoginBody(getValues('email'), getValues('password'));
     validateOrReject(body).then(() => {
+      console.log('DEF');
       AuthService.login(getValues(), (result) => {
+        console.log('ABC');
         if (result.ok) {
           props.onSuccess(result.ok.body);
         } else if (result.error) {

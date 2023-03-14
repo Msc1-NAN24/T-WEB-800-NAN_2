@@ -54,8 +54,6 @@ export default function SearchBar(props: SearchBarProps) {
     }
   }
 
-  const getBounds = new google.maps.LatLngBounds({lat: props.bounds[0], lng: props.bounds[1]});
-
   return (
       <div className={"z-10 w-full h-16 rounded-2xl bg-white shadow-2xl mt-8 mx-6 flex flex-row"}>
         <Autocomplete className={"rounded-2xl w-11/12"} onLoad={onLoaded} onPlaceChanged={onPlaceChanged}>

@@ -13,11 +13,11 @@ export default function Events({city}: EventsProps) {
   const {data, error, isLoading} = useSWR(`/events/${city}/`, () => EventsService.getByCity(city));
 
   if (error) {
-    return 'An error Occured !';
+    return <p>An error Occurred !</p>
   }
 
   if (isLoading) {
-    return 'Loading ...'
+    return <p>'Loading ...'</p>
   }
 
   console.log(data?.error?.status);

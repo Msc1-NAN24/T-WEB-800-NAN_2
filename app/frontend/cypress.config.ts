@@ -16,7 +16,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       config.env = {
         ...process.env,
-        ...config.env
+        ...config.env,
       }
       return config
     },
