@@ -1,8 +1,9 @@
+import ActivityCard from "./ActivityCard";
+
 export {}
 
 import React from 'react'
 
-/*
 describe('<ActivityCard />', () => {
   it('renders', () => {
     // see: https://on.cypress.io/mounting-react
@@ -22,4 +23,4 @@ describe('<ActivityCard />', () => {
     cy.get('@onPlanSpy').should('have.been.called');
     cy.get('@onCloseSpy').should('have.been.called');
   });
-});*/
+});

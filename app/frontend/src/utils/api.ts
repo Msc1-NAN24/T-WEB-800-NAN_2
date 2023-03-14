@@ -1,8 +1,8 @@
-import {getEnv} from "@/utils/env";
 import {Result} from "@/utils/type";
+import * as process from "process";
 
-export const buildApiUrl = (suffix: string) => {
-  return new URL(suffix, getEnv('API_URL')).href
+export const buildApiUrl = (suffix: string, params?: URLSearchParams) => {
+  return new URL(suffix, process.env.NEXT_PUBLIC_API_URL).href + ('?' + params?.toString() ?? '');
 };
 
 export class API {
@@ -15,7 +15,7 @@ export class API {
         callback({error: {body: await res.json(), status: res.status}});
       }
     }).catch((err) => {
-      callback({ok: undefined, error: {body: err, status: 0}})
+      callback({ok: undefined, error: {body: err, status: -1}})
     })
   }
 
@@ -27,8 +27,23 @@ export class API {
 
   }
 
-  public static get(): string {
-    return 'abc';
+
+  public static async get<T, Z>(endpoint: string, params?: URLSearchParams, options: RequestInit = {}): Promise<Result<T, Z>> {
+    try {
+      const res = await fetch(buildApiUrl(endpoint, params), {...options, method: 'GET'});
+      if (res.ok) {
+        return {ok: {body: await res.json(), status: res.status}}
+      } else {
+        return {error: {body: await res.json(), status: res.status}}
+      }
+    } catch (err: any) {
+      return {
+        error: {
+          status: -1,
+          body: err,
+        }
+      }
+    }
   }
 
   public static delete() {

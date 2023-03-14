@@ -23,7 +23,9 @@ export type User = {
   password: string;
   created_at: Date;
   updated_at: Date;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   picture: string;
+  phone: string;
+  _id: string;
 }

@@ -35,8 +35,8 @@ export default function LoginSection({user, onClickButton}: LoginAvatarProps) {
     )
   } else {
     return (
-      <div className={"login-buttons flex flex-row"}>
-        <button className={"btn"} onClick={() => onClickButton(AvailableButton.Login)}>Se connecter</button>
+      <div className={"login-buttons flex flex-row gap-4"}>
+        <button className={"btn "} onClick={() => onClickButton(AvailableButton.Login)}>Se connecter</button>
         <button className={"btn btn-primary"} onClick={() => onClickButton(AvailableButton.Register)}>S'inscrire</button>
       </div>
     )
