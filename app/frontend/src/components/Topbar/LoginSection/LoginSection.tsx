@@ -21,7 +21,7 @@ export default function LoginSection({user, onClickButton}: LoginAvatarProps) {
           <label tabIndex={0}>
             <div className="avatar cursor-pointer">
               <div className="w-12 rounded">
-                <img className={"user-avatar"} title={`${user.firstname} ${user.lastname}`} src={user.picture} alt={user.email}/>
+                <img className={"user-avatar"} title={`${user.firstName} ${user.lastName}`} src={user.picture} alt={user.email}/>
               </div>
             </div>
           </label>
@@ -35,8 +35,8 @@ export default function LoginSection({user, onClickButton}: LoginAvatarProps) {
     )
   } else {
     return (
-      <div className={"login-buttons flex flex-row"}>
-        <button className={"btn"} onClick={() => onClickButton(AvailableButton.Login)}>Se connecter</button>
+      <div className={"login-buttons flex flex-row gap-4"}>
+        <button className={"btn "} onClick={() => onClickButton(AvailableButton.Login)}>Se connecter</button>
         <button className={"btn btn-primary"} onClick={() => onClickButton(AvailableButton.Register)}>S'inscrire</button>
       </div>
     )

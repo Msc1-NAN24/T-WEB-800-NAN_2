@@ -1,5 +1,5 @@
 export type Env = {
-  API_URL: string;
+  NEXT_PUBLIC_API_URL: string;
   NEXT_PUBLIC_MAPBOX_TOKEN: string;
 }
 

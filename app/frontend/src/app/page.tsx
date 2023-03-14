@@ -1,12 +1,12 @@
 import Map from "@/components/Map/Map";
-import Topbar from "@/components/Topbar/Topbar";
+import Events from "@/components/Events/Events";
 
 export default function Page() {
 
   return (
     <>
-      <Topbar/>
       <Map/>
+      <Events city={'Nantes'}/>
     </>
   )
 }

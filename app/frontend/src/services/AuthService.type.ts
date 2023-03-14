@@ -1,4 +1,5 @@
 import {IsEmail, Length} from "class-validator";
+import {User} from "@/utils/type";
 
 export class LoginBody {
   @IsEmail()
@@ -15,7 +16,7 @@ export class LoginBody {
 
 export type LoginResponse = {
   accessToken: string;
-  user: unknown;
+  user: User;
 }
 
 export type LoginError = {
@@ -34,7 +35,6 @@ export class RegisterBody {
 
   @Length(3, 32)
   lastname: string;
-
 
   constructor(email: string, password: string, firstname: string, lastname: string) {
     this.email = email;
