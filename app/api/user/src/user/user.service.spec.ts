@@ -7,6 +7,7 @@ import {
   closeInMongodConnection,
   rootMongooseTestModule,
 } from '../test-utils/mongo/MongooseTestModule';
+import * as bcrypt from 'bcrypt';
 
 const mockUser = {
   lastName: 'lastName #1',
@@ -59,9 +60,18 @@ describe('UsersService', () => {
   });
   it('should create user in DB', async () => {
     const res = await service.create(mockUser);
+    const isMatch = await bcrypt.compare(mockUser.password, res.password);
 
     expect(res._id.toString().length).toEqual(24);
-    expect(res).toEqual(expect.objectContaining(mockUser));
+    expect(res).toEqual(
+      expect.objectContaining({
+        lastName: 'lastName #1',
+        firstName: 'firstName #1',
+        email: 'email #1',
+        phone: '555 01',
+      }),
+    );
+    expect(isMatch).toBeTruthy();
   });
 
   it('should be update user', async () => {
