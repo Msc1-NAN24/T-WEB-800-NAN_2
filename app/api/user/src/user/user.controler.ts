@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './model/user.schema';
+import { Query } from '@nestjs/common';
 
 @Controller('user')
 export class UserController {
@@ -21,6 +22,11 @@ export class UserController {
   @Get(':id')
   getUser(@Param('id') userId: string) {
     return this.userService.findOne({ _id: userId });
+  }
+
+  @Get('email')
+  getUserByEmail(@Query('email') email: string) {
+    return this.userService.findOne({ email });
   }
 
   @Post('')
