@@ -7,6 +7,9 @@ import {DateValueType} from "react-tailwindcss-datepicker/dist/types";
 import { motion } from "framer-motion";
 import {useForm} from "react-hook-form";
 import FilterModal from "@/components/Map/FilterModal/FilterModal";
+import {PlacesService} from "@/services/PlacesService";
+import {Result} from "@/utils/type";
+import {Place} from "@/services/PlacesService.type";
 
 enum ActionType {
   Hostel = 'Hotel',
@@ -16,9 +19,27 @@ enum ActionType {
 }
 
 export type FilterBarProps = {
+  location: {
+    lat: number;
+    lng: number;
+    radius: number;
+  };
   dates: Date[];
   onDatesChanged: (dates: Date[]) => void;
   show: boolean;
+  onPlacesChanged: (places: MapLocation[]) => void;
+}
+
+export type MapLocation = {
+  location: {
+    lat: number;
+    lng: number;
+  }
+  name: string;
+  place_id: string;
+  rating: number;
+  type: ActionType;
+  icon: string;
 }
 
 export type FilterForm = {
@@ -27,48 +48,81 @@ export type FilterForm = {
   Restaurant: boolean;
   Bar: boolean;
   filterModal: boolean;
+  places: MapLocation[];
 }
 
-export default function FilterBar({dates, onDatesChanged, show}: FilterBarProps) {
+export default function FilterBar({dates, onDatesChanged, show, location, onPlacesChanged}: FilterBarProps) {
 
-  const {watch, setValue, getValues} = useForm<FilterForm>({defaultValues: {Bar: false, Activités: false, Restaurant: false, Hotel: false, filterModal: false}});
+  const {watch, setValue, getValues} = useForm<FilterForm>({defaultValues: {Bar: false, Activités: false, Restaurant: false, Hotel: false, filterModal: false, places: []}});
 
-  const onClickHostels = useCallback(() => {
-    setValue('Hotel', !getValues('Hotel'));
-  }, []);
-
-  const onClickActivity = useCallback(() => {
-    setValue('Activités', !getValues('Activités'));
-
-  }, []);
-
-  const onClickRestaurant = useCallback(() => {
-    setValue('Restaurant', !getValues('Restaurant'));
-
-  }, []);
-
-  const onClickBar = useCallback(() => {
-    setValue('Bar', !getValues('Bar'));
-  }, []);
+  const onClickItem = useCallback((action: any) => {
+    setValue(action.onClick.type, !getValues(action.onClick.type));
+    if (getValues(action.onClick.type)) {
+      action.onClick.fnc({
+        radius: location.radius,
+        location: location
+      }).then((value: Result) => {
+        if (value.ok) {
+          const current = getValues('places');
+          value.ok.body.places.forEach((a: Place) => {
+            const p = {
+              type: action.onClick.type,
+              location: a.geometry.location,
+              name: a.name,
+              place_id: a.place_id,
+              rating: a.rating,
+              icon: a.icon
+            } as MapLocation;
+            if (!current.some((a) => a.place_id === p.place_id)) {
+              current.push(p);
+            }
+          })
+          setValue('places', current);
+          onPlacesChanged(getValues('places'));
+        } else {
+          console.log('NOT OK !');
+        }
+        console.log(value.ok);
+      }).catch((err: unknown) => {
+        console.log(err);
+      });
+    } else {
+      const current = getValues('places');
+      setValue('places', current.filter((p: MapLocation) => p.type !== action.onClick.type));
+      onPlacesChanged(getValues('places'));
+    }
+  }, [location]);
 
   const actions = useMemo(() => ({
     [ActionType.Hostel]: {
       icon: '/icons/bed.svg',
-      onClick: onClickHostels,
+      onClick: {
+        fnc: PlacesService.searchHostel,
+        type: ActionType.Hostel
+      }
     },
     [ActionType.Activity]: {
       icon: '/icons/local_activity.svg',
-      onClick: onClickActivity
+      onClick: {
+        fnc: PlacesService.searchActivity,
+        type: ActionType.Activity
+      }
     },
     [ActionType.Bar]: {
       icon: '/icons/sports_bar.svg',
-      onClick: onClickBar
+      onClick: {
+        fnc: PlacesService.searchBar,
+        type: ActionType.Bar
+      }
     },
     [ActionType.Restaurant]: {
       icon: '/icons/flatware.svg',
-      onClick: onClickRestaurant
+      onClick: {
+        fnc: PlacesService.searchRestaurant,
+        type: ActionType.Restaurant
+      }
     }
-  }), [onClickBar, onClickRestaurant, onClickActivity, onClickHostels]);
+  }), [onClickItem]);
 
   const onDateChanged = (date: DateValueType) => {
     if (date !== null && date.startDate !== null && date.endDate) {
@@ -85,8 +139,8 @@ export default function FilterBar({dates, onDatesChanged, show}: FilterBarProps)
             <div className={"grid grid-cols-12"}>
               <div className={"col-span-7 flex flex-row gap-4 px-4 py-2 pb-6"}>
                 {Object.values(ActionType).map((v, index) => (
-                  <div key={'action-type-' + index} onClick={actions[v].onClick} className={`h-min border-2 border-gray-200 rounded-3xl py-2 px-4 my-auto flex flex-row gap-2 align-middle cursor-pointer ${watch(v) ? 'bg-gray-200 border-gray-300' : 'bg-white'} hover:bg-gray-200 transition-all`}>
-                    <Image src={actions[v].icon} alt={""} width={22} height={22}/>
+                  <div key={'action-type-' + index} onClick={() => onClickItem(actions[v])} className={`h-min border-2 border-gray-200 rounded-3xl py-2 px-4 my-auto flex flex-row gap-2 align-middle cursor-pointer ${watch(v) ? 'bg-gray-200 border-gray-300' : 'bg-white'} hover:bg-gray-200 transition-all`}>
+                    <Image src={actions[v].icon} alt={'Icon'} width={22} height={22}/>
                     <p className={"font-medium"}>{v}</p>
                   </div>
                 ))}

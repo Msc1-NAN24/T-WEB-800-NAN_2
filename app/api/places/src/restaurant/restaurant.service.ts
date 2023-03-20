@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import {Client} from "@googlemaps/google-maps-services-js";
+import {Injectable} from '@nestjs/common';
+import {Client, Status} from "@googlemaps/google-maps-services-js";
 import {RestaurantSearchQueryDto} from "./restaurant.dto";
 
 @Injectable()
@@ -11,11 +11,14 @@ export class RestaurantService {
     this.client = new Client();
   }
 
-  public getNearby(params: RestaurantSearchQueryDto) {
-    return this.client.placesNearby({
+  public async getNearby(params: RestaurantSearchQueryDto) {
+    const a = await this.client.placesNearby({
       params: {
         key: process.env.GOOGLE_KEY ?? '',
-        location: params.location,
+        location: {
+          lat: params.lat,
+          lng: params.lng,
+        },
         radius: params.radius,
         opennow: params.opennow,
         maxprice: params.maxprice,
@@ -23,7 +26,20 @@ export class RestaurantService {
         type: 'restaurant',
       }
     });
-    /*return this.client.placesNearby()*/
+    if (a.data.status === Status.ZERO_RESULTS) {
+      return {
+        places: []
+      };
+    }
+    if (a.data.status === Status.OK) {
+      return {
+        places: a.data.results,
+      };
+    } else {
+      return {
+        error: 'An Google error occurred !',
+      }
+    }
   }
 
 }

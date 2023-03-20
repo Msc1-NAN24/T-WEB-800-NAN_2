@@ -27,6 +27,17 @@ export class API {
 
   }
 
+  public static async getBlob<T, Z = any>(endpoint: string, params?: URLSearchParams, options: RequestInit = {}): Promise<Blob> {
+    try {
+      const res = await fetch(buildApiUrl(endpoint, params), {...options, method: 'GET'});
+      if (res.ok) {
+        return res.blob();
+      }
+      throw new Error('Invalid blob data !');
+    } catch (err: any) {
+      throw new Error('Invalid blob data !');
+    }
+  }
 
   public static async get<T, Z>(endpoint: string, params?: URLSearchParams, options: RequestInit = {}): Promise<Result<T, Z>> {
     try {

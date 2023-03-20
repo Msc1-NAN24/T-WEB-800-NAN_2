@@ -1,6 +1,5 @@
 version: '3.4'
 services:
-
   api-gateway:
     container_name: gateway
     build:
@@ -16,7 +15,6 @@ services:
       - api
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-
 
   api-user:
     container_name: apiUser
@@ -34,6 +32,21 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+  api-places:
+    container_name: placeapi
+    build:
+      context: ./app/api/places
+      target: deps
+    environment:
+      - GOOGLE_KEY=${GOOGLE_KEY}
+    command: "pnpm start:dev"
+    ports:
+      - "4003:4003"
+    volumes:
+      - ./app/api/places/:/usr/src/app/
+    networks:
+      - api
 
   api-travel:
     container_name: travelapi
