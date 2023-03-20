@@ -49,7 +49,7 @@ export default function RegisterModal(props: RegisterModalProps) {
         <TextInput prefix={"modal-lastname"} label={"Nom"} onTextChange={(e) => setValue('lastname', e)} value={watch('lastname')} error={errors.lastname !== undefined} errorText={errors.lastname?.message}/>
         <TextInput prefix={"modal-firstname"} label={"Prénom"} onTextChange={(e) => setValue('firstname', e)} value={watch('firstname')} error={errors.firstname !== undefined} errorText={errors.firstname?.message}/>
         <TextInput prefix={"modal-email"} label={"Email"} onTextChange={(e) => setValue('email', e)} value={watch('email')} error={errors.email !== undefined} errorText={errors.email?.message}/>
-        <TextInput prefix={"modal-password"} label={"Password"} onTextChange={(e) => setValue('password', e)} value={watch('password')} error={errors.password !== undefined} errorText={errors.password?.message}/>
+        <TextInput type={'password'} prefix={"modal-password"} label={"Password"} onTextChange={(e) => setValue('password', e)} value={watch('password')} error={errors.password !== undefined} errorText={errors.password?.message}/>
         <button className={"mt-8 modal-register-btn btn btn-primary"} onClick={onClickRegister}>
           S'inscrire
         </button>

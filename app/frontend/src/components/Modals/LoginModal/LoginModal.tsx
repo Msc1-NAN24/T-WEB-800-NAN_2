@@ -48,7 +48,7 @@ export default function LoginModal(props: LoginModalProps) {
         <h1 className={"modal-title text-2xl font-bold"}>{props.title ?? 'Se connecter'}</h1>
 
         <TextInput prefix={"modal-email"} label={"Email"} onTextChange={(e) => setValue('email', e)} value={watch('email')} error={errors.email !== undefined} errorText={errors.email?.message}/>
-        <TextInput prefix={"modal-password"} label={"Password"} onTextChange={(e) => setValue('password', e)} value={watch('password')} error={errors.password !== undefined} errorText={errors.password?.message}/>
+        <TextInput type={'password'} prefix={"modal-password"} label={"Password"} onTextChange={(e) => setValue('password', e)} value={watch('password')} error={errors.password !== undefined} errorText={errors.password?.message}/>
 
         <button className={"mt-8 modal-login-btn btn btn-primary"} onClick={onClickLogin}>
           Se connecter
