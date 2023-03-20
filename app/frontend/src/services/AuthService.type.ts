@@ -1,5 +1,5 @@
-import {IsEmail, Length} from "class-validator";
-import {User} from "@/utils/type";
+import { IsEmail, Length } from "class-validator";
+import { User } from "@/utils/type";
 
 export class LoginBody {
   @IsEmail()
@@ -15,13 +15,11 @@ export class LoginBody {
 }
 
 export type LoginResponse = {
-  accessToken: string;
+  access_token: string;
   user: User;
-}
+};
 
-export type LoginError = {
-
-}
+export type LoginError = {};
 
 export class RegisterBody {
   @IsEmail()
@@ -31,19 +29,25 @@ export class RegisterBody {
   password: string;
 
   @Length(3, 32)
-  firstname: string;
+  firstName: string;
 
   @Length(3, 32)
-  lastname: string;
+  lastName: string;
 
-  constructor(email: string, password: string, firstname: string, lastname: string) {
+  constructor(
+    email: string,
+    password: string,
+    firstname: string,
+    lastname: string
+  ) {
     this.email = email;
     this.password = password;
-    this.firstname = firstname;
-    this.lastname = lastname;
+    this.firstName = firstname;
+    this.lastName = lastname;
   }
 }
 
 export type RegisterResponse = {
-
-}
+  access_token: string;
+  user: User;
+};
