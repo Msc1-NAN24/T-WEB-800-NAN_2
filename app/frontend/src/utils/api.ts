@@ -18,49 +18,61 @@ export class API {
     fetch(buildApiUrl(endpoint), {
       ...options,
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {"content-type": "application/json"},
       body: JSON.stringify(body),
     })
       .then(async (res) => {
         if (res.ok) {
-          callback({ ok: { body: await res.json(), status: res.status } });
+          callback({ok: {body: await res.json(), status: res.status}});
         } else {
-          callback({ error: { body: await res.json(), status: res.status } });
+          callback({error: {body: await res.json(), status: res.status}});
         }
       })
       .catch((err) => {
-        callback({ ok: undefined, error: { body: err, status: -1 } });
+        callback({ok: undefined, error: {body: err, status: -1}});
       });
   }
 
-  public static patch() {}
+  public static patch() {
+  }
 
-  public static put() {}
+  public static put() {
+  }
 
-  public static async get<T, Z>(
-    endpoint: string,
-    params?: URLSearchParams,
-    options: RequestInit = {}
-  ): Promise<Result<T, Z>> {
+  public static async getBlob<T, Z = any>(endpoint: string, params?: URLSearchParams, options: RequestInit = {}): Promise<Blob> {
+    try {
+      const res = await fetch(buildApiUrl(endpoint, params), {...options, method: 'GET'});
+      if (res.ok) {
+        return res.blob();
+      }
+      throw new Error('Invalid blob data !');
+    } catch (err: any) {
+      throw new Error('Invalid blob data !');
+    }
+  }
+
+  public static async get<T, Z>(endpoint: string, params?: URLSearchParams, options: RequestInit = {}): Promise<Result<T, Z>> {
     try {
       const res = await fetch(buildApiUrl(endpoint, params), {
         ...options,
         method: "GET",
       });
       if (res.ok) {
-        return { ok: { body: await res.json(), status: res.status } };
+        return {ok: {body: await res.json(), status: res.status}};
       } else {
-        return { error: { body: await res.json(), status: res.status } };
+        return {error: {body: await res.json(), status: res.status}};
       }
     } catch (err: any) {
       return {
         error: {
           status: -1,
           body: err,
-        },
-      };
+        }
+      }
     }
   }
 
-  public static delete() {}
+  public static delete() {
+
+  }
 }

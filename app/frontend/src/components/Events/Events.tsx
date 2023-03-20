@@ -17,7 +17,7 @@ export default function Events({city}: EventsProps) {
   }
 
   if (isLoading) {
-    return <p>'Loading ...'</p>
+    return <p>Loading events...</p>
   }
 
   console.log(data?.error?.status);

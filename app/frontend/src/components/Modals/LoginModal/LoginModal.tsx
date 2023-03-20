@@ -69,6 +69,7 @@ export default function LoginModal(props: LoginModalProps) {
           errorText={errors.email?.message}
         />
         <TextInput
+          type={'password'}
           prefix={"modal-password"}
           label={"Password"}
           onTextChange={(e) => setValue("password", e)}

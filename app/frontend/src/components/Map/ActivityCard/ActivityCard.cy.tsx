@@ -10,7 +10,7 @@ describe('<ActivityCard />', () => {
     const onPlanSpy = cy.spy().as('onPlanSpy');
     const onCloseSpy = cy.spy().as('onCloseSpy');
 
-    cy.mount(<ActivityCard onClose={onCloseSpy} onPlan={onPlanSpy} activity={{note: 4.3, description: 'Lorem ipsum...', title: 'Havana', picture: '/'}}/>);
+    cy.mount(<ActivityCard loading={false} show={true} onClose={onCloseSpy} onPlan={onPlanSpy} activity={{note: 4.3, description: 'Lorem ipsum...', title: 'Havana', picture: '/'}}/>);
 
     cy.get('.map-activity-title').should('be.visible').should('contain.text', 'Havana');
     cy.get('.map-activity-description').should('be.visible').should('contain.text', 'Lorem ipsum...');

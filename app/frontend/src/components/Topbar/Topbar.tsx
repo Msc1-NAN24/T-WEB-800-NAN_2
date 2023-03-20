@@ -62,26 +62,20 @@ export default function Topbar() {
       />
       <div className={"flex flex-row items-center w-full p-4"}>
         <img
-          className={"logo"}
+          className={"logo rounded-xl"}
           alt={"logo"}
           src={
-            "https://www.a2sci.re/wp-content/uploads/2016/12/logo-placeholder.png"
+            "/atrip.png"
           }
           height={80}
           width={80}
           title={"Trip"}
         />
-        <ul className={"ml-8"}>
-          <li>Accueil</li>
+        <ul className={"invisible sm:visible ml-8 flex flex-row gap-10"}>
+          <li className={"text-lg"}>Accueil</li>
+          <li className={"text-lg"}>Mes planifications</li>
         </ul>
-        <div className={"float-right right-0 ml-auto"}>
-          <LoginSection
-            user={ctx.user}
-            onClickButton={(a) => {
-              actions[a]();
-            }}
-          />
-        </div>
+        <LoginSection user={ctx.user} onClickButton={(a) => {actions[a]()}}/>
       </div>
     </>
   );

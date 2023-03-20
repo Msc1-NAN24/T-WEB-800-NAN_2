@@ -91,6 +91,7 @@ export default function RegisterModal(props: RegisterModalProps) {
           errorText={errors.email?.message}
         />
         <TextInput
+          type={'password'}
           prefix={"modal-password"}
           label={"Password"}
           onTextChange={(e) => setValue("password", e)}
