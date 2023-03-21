@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Card } from "flowbite-react";
-import imgCard from "@/dddepth-127.jpg";
+import imgCard from "@/imgCard.jpg";
 import Image from "next/image";
 interface EventsProps {
   title: string,
@@ -14,9 +14,14 @@ export default function EventCard(props: EventsProps) {
     
     <div className="flex justify-center">
       <div className="flex flex-col rounded-lg bg-white shadow-lg dark:bg-neutral-700 md:max-w-xl md:flex-row">
+        {/*<Image
+          className="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+          src={imgCard}
+          alt="" 
+  />*/}
         <img
           className="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-          src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
+          src="https://fffuel.co/images/dddepth/dddepth-127.jpg"
           alt="" 
         />
         <div className="flex flex-col justify-start p-6">
