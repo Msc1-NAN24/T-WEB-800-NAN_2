@@ -1,3 +1,5 @@
+import { Card } from "react-bootstrap";
+
 interface EventsProps {
   title: string,
   date: string,
@@ -9,9 +11,17 @@ export default function EventCard(props: EventsProps) {
   return (
     <div className="max-w-sm">
       <h1>EventCard</h1>
-      <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{props.title}</h3>
-      <p className="font-normal text-gray-700 dark:text-gray-400">{props.date} - {props.lieu}</p>
-      <p className="font-normal text-gray-700 dark:text-gray-400">{props.description}</p>
+      <Card>
+        {/** en attendant les données de l'API */}
+        {/*<h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{props.title}</h3>
+        <p className="font-normal text-gray-700 dark:text-gray-400">{props.date} - {props.lieu}</p>
+        <p className="font-normal text-gray-700 dark:text-gray-400">{props.description}</p>*/}
+        <h3>Atelier maison: créer ses patisseries</h3>
+        <p>21 janvier à 16h - Nantes, Commerce</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+          Curabitur convallis eu magna ac lacinia. 
+          Quisque scelerisque neque sit amet dignissim sodales.</p>
+      </Card>
     </div>
   );
 }
