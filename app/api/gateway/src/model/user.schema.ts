@@ -36,7 +36,11 @@ export class User {
   @ApiProperty()
   @IsPhoneNumber('FR')
   phone: string;
-  @Prop({ isRequired: false })
+  @Prop({
+    isRequired: false,
+    default:
+      'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
+  })
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
