@@ -51,14 +51,13 @@ export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
     const state = localStorage.getItem("state");
     const user = localStorage.getItem("user");
     const access_token = localStorage.getItem("access_token");
-    console.log(state, user, access_token);
-    if (state && user && access_token) {
-      console.log("test");
-      console.log({
-        state: JSON.parse(state),
-        user: JSON.parse(user),
-        access_token: JSON.parse(access_token),
-      });
+    if (
+      state &&
+      user &&
+      user !== "undefined" &&
+      access_token &&
+      access_token !== ""
+    ) {
       const stateParse = JSON.parse(state);
       const userParse = JSON.parse(user);
       const access_tokenParse = JSON.parse(access_token);
