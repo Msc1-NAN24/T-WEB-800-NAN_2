@@ -18,13 +18,13 @@ export class AuthService {
     email: string,
     pass: string,
   ): Promise<Omit<User, 'password'>> {
-    console.log('ValidateUser');
     const user = await this.userModel.findOne({ email }, '+password');
-    const isMatch = await bcrypt.compare(pass, user.password);
-    console.log({ user, isMatch });
-    if (user && isMatch) {
-      delete user.password;
-      return user;
+    if (user) {
+      const isMatch = bcrypt.compare(pass, user.password);
+      if (isMatch) {
+        delete user.password;
+        return user;
+      }
     }
     return null;
   }
@@ -38,12 +38,16 @@ export class AuthService {
   }
 
   async register(createUser: createUserDto) {
-    const user = await this.usersService.createUser(createUser);
-    const payload = { username: user.email, sub: user._id };
+    try {
+      const user = await this.userModel.create(createUser);
+      const payload = { username: user.email, sub: user._id };
 
-    return {
-      access_token: this.jwtService.sign(payload),
-      user,
-    };
+      return {
+        access_token: this.jwtService.sign(payload),
+        user,
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
