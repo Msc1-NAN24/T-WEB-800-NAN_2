@@ -4,6 +4,7 @@ import {useOnClickOutside} from "@/hooks/useOnClickOutside";
 export type ModalProps = {
   open: boolean;
   onDismiss?: () => void;
+  disableOutside?: boolean;
 }
 
 export default function Modal(props: React.PropsWithChildren<ModalProps>) {
@@ -11,7 +12,7 @@ export default function Modal(props: React.PropsWithChildren<ModalProps>) {
   const modalRef = useRef<any>();
 
   useOnClickOutside(modalRef, () => {
-    if (!props.open || !props.onDismiss)
+    if (!props.open || !props.onDismiss || props.disableOutside)
       return;
     props.onDismiss();
   })

@@ -1,5 +1,5 @@
 import {Controller, Get, Query} from "@nestjs/common";
-import {AppService, DetailQueryDto, PhotoQueryDto} from "./app.service";
+import {AppService, DetailQueryDto, DistanceQueryDto, PhotoQueryDto} from "./app.service";
 
 @Controller()
 export class AppController {
@@ -15,6 +15,11 @@ export class AppController {
   @Get('photo')
   public getPhoto(@Query() photo: PhotoQueryDto) {
     return this.service.getPhoto(photo);
+  }
+
+  @Get('distance')
+  public getDistance(@Query() query: DistanceQueryDto) {
+    return this.service.getDistance(query);
   }
 
 }

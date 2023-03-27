@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['fffuel.co'],
+    domains: ['fffuel.co', 'maps.googleapis.com'],
   },
   experimental: {
     appDir: true,
