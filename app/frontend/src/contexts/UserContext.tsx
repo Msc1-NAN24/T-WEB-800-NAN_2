@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AuthService } from "@/services/AuthService";
 import { ApiError, Result, User } from "@/utils/type";
@@ -43,9 +43,55 @@ export const UserContext = React.createContext<UserContextType>({
 });
 
 export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
-  const { watch, setValue } = useForm<
+  const { watch, setValue, getValues } = useForm<
     Omit<UserContextType, "onLogin" | "onRegister" | "onLogout">
   >({ defaultValues: { state: AuthState.Loading, user: undefined } });
+
+  useEffect(() => {
+    const state = localStorage.getItem("state");
+    const user = localStorage.getItem("user");
+    const access_token = localStorage.getItem("access_token");
+    if (
+      state &&
+      user &&
+      user !== "undefined" &&
+      access_token &&
+      access_token !== ""
+    ) {
+      const stateParse = JSON.parse(state);
+      const userParse = JSON.parse(user);
+      const access_tokenParse = JSON.parse(access_token);
+
+      setValue("state", stateParse);
+      setValue("user", userParse);
+      setValue("access_token", access_tokenParse);
+    } else {
+      setValue("state", AuthState.NotLogged);
+      setValue("user", undefined);
+      setValue("access_token", "");
+    }
+  }, []);
+  const setResult = (
+    result: Result<RegisterResponse, ApiError<any>>,
+    callback: any
+  ) => {
+    if (result.ok) {
+      callback(result);
+      setValue("state", AuthState.Logged);
+      setValue("user", result.ok.body.user);
+      setValue("access_token", result.ok.body.access_token);
+    } else {
+      setValue("state", AuthState.NotLogged);
+      setValue("user", undefined);
+      setValue("access_token", "");
+    }
+    localStorage.setItem("state", JSON.stringify(getValues("state")));
+    localStorage.setItem("user", JSON.stringify(getValues("user")));
+    localStorage.setItem(
+      "access_token",
+      JSON.stringify(getValues("access_token"))
+    );
+  };
 
   const onLogin = useCallback(
     (
@@ -54,16 +100,7 @@ export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
       callback: (res: Result<LoginResponse, ApiError>) => void
     ) => {
       AuthService.login({ email, password }, (result) => {
-        if (result.ok) {
-          callback(result);
-          setValue("state", AuthState.Logged);
-          setValue("user", result.ok.body.user);
-          setValue("access_token", result.ok.body.access_token);
-        } else {
-          setValue("state", AuthState.NotLogged);
-          setValue("user", undefined);
-          setValue("access_token", "");
-        }
+        setResult(result, callback);
       });
     },
     []
@@ -75,16 +112,7 @@ export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
       callback: (res: Result<RegisterResponse, ApiError>) => void
     ) => {
       AuthService.register(body, (result) => {
-        if (result.ok) {
-          callback(result);
-          setValue("state", AuthState.Logged);
-          setValue("user", result.ok.body.user);
-          setValue("access_token", result.ok.body.access_token);
-        } else {
-          setValue("state", AuthState.NotLogged);
-          setValue("user", undefined);
-          setValue("access_token", "");
-        }
+        setResult(result, callback);
       });
     },
     []
@@ -92,6 +120,15 @@ export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
 
   const onLogout = useCallback((callback: () => void) => {
     callback();
+    setValue("state", AuthState.NotLogged);
+    setValue("user", undefined);
+    setValue("access_token", "");
+    localStorage.setItem("state", JSON.stringify(getValues("state")));
+    localStorage.setItem("user", JSON.stringify(getValues("user")));
+    localStorage.setItem(
+      "access_token",
+      JSON.stringify(getValues("access_token"))
+    );
   }, []);
 
   return (

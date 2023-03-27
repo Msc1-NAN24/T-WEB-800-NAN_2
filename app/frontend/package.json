@@ -45,7 +45,7 @@
     "@types/react-slick": "^0.23.10",
     "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.13",
-    "cypress": "^12.7.0",
+    "cypress": "^12.8.1",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7"
   }
