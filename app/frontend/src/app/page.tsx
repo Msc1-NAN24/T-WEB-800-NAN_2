@@ -5,8 +5,8 @@ import MapLayout from "@/components/Map/MapLayout";
 export default async function Page() {
   return (
     <>
-      <MapLayout/>
-      <Events city={'Nantes'}/>
+      <MapLayout />
+      <Events city={"Nantes"} />
     </>
-  )
+  );
 }
