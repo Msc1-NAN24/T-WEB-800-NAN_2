@@ -45,7 +45,7 @@ export default function ActivityCard({activity, onClose, show, loading, onPlan}:
 
   const getImgs = (): string[] =>  {
     if (activity?.picture !== undefined && activity?.picture?.length > 0) {
-      return activity?.picture?.map((pic) => `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${pic}&key=AIzaSyDHkts9Uug339wizRpG7K3OY4ofZwrr-qA`);
+      return activity?.picture?.map((pic) => `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${pic}&key=${process.env.NEXT_PUBLIC_GOOGLE_KEY_PHOTO}`);
     }
     return [];
   }
