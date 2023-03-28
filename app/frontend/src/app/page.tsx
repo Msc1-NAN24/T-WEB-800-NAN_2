@@ -1,12 +1,8 @@
-import Events from "@/components/Events/Events";
 import React from "react";
-import MapLayout from "@/components/Map/MapLayout";
+import AppLayout from "@/components/AppLayout/AppLayout";
 
 export default async function Page() {
   return (
-    <>
-      <MapLayout />
-      <Events city={"Nantes"} />
-    </>
-  );
+    <AppLayout/>
+  )
 }
