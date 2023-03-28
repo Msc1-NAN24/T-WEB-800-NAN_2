@@ -1,6 +1,5 @@
 version: '3.4'
 services:
-
   api-gateway:
     container_name: gateway
     build:
@@ -14,8 +13,10 @@ services:
     networks:
       - frontend
       - api
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
-  userapi:
+  api-user:
     container_name: apiUser
     build:
       context: ./app/api/user
@@ -32,7 +33,22 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
-  travelapi:
+  api-places:
+    container_name: placeapi
+    build:
+      context: ./app/api/places
+      target: deps
+    environment:
+      - GOOGLE_KEY=${GOOGLE_KEY}
+    command: "pnpm start:dev"
+    ports:
+      - "4003:4003"
+    volumes:
+      - ./app/api/places/:/usr/src/app/
+    networks:
+      - api
+
+  api-travel:
     container_name: travelapi
     build:
       context: ./app/api/travel
@@ -74,6 +90,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     networks:
       - api
+    ports:
+      - "27017:27017"
 
 networks:
   frontend:

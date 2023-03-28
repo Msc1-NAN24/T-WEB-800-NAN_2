@@ -10,17 +10,15 @@ type EventsProps = {
 
 export default function Events({city}: EventsProps) {
 
-  const {data, error, isLoading} = useSWR(`/events/${city}/`, () => EventsService.getByCity(city));
+  const {error, isLoading} = useSWR(`/events/${city}/`, () => EventsService.getByCity(city));
 
   if (error) {
     return <p>An error Occurred !</p>
   }
 
   if (isLoading) {
-    return <p>'Loading ...'</p>
+    return <p>Loading events...</p>
   }
-
-  console.log(data?.error?.status);
 
   return(
     <div className={"px-24 py-8"}>

@@ -108,6 +108,7 @@ jobs:
         services: [
           {name: "User", folder: "./app/api/user"},
           {name: "Events", folder: "./app/api/events"},
+          {name: "Places", folder: "./app/api/places"},
           {name: "Travel", folder: "./app/api/travel"}
         ]
     steps:
@@ -134,8 +135,9 @@ jobs:
     strategy:
       matrix:
         services: [
-          { name: "User", folder: "./app/api/user" },
-          { name: "Events", folder: "./app/api/events" },
+          {name: "User", folder: "./app/api/user"},
+          {name: "Events", folder: "./app/api/events"},
+          {name: "Places", folder: "./app/api/places"},
           {name: "Travel", folder: "./app/api/travel"}
         ]
     steps:

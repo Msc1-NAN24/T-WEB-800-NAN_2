@@ -22,20 +22,30 @@
     "dotenv": "^16.0.3",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "flatpickr": "^4.6.13",
+    "framer-motion": "^10.3.1",
+    "gsap": "^3.11.4",
+    "lottie-react": "^2.4.0",
     "mapbox-gl": "^2.13.0",
-    "next": "13.1.6",
+    "next": "13.2.4",
     "next-router-mock": "^0.9.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-flatpickr": "^3.10.13",
     "react-hook-form": "^7.43.2",
+    "react-slick": "^0.29.0",
     "react-tailwindcss-datepicker": "^1.5.1",
     "swr": "^2.1.0",
-    "typescript": "4.9.5"
+    "tw-elements": "1.0.0-beta1",
+    "typescript": "4.9.5",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.4.0",
+    "@types/react-slick": "^0.23.10",
+    "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.13",
-    "cypress": "^12.7.0",
+    "cypress": "^12.8.1",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7"
   }

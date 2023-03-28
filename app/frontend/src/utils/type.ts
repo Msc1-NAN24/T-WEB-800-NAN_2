@@ -29,3 +29,4 @@ export type User = {
   phone: string;
   _id: string;
 }
+
