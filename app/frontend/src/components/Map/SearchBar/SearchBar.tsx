@@ -21,7 +21,6 @@ export default function SearchBar(props: SearchBarProps) {
 
   const onPositionUpdated = (position: GeolocationPosition) => {
     if (props.onClickUpdateLocation) {
-      console.log(position);
       props.onClickUpdateLocation([position.coords.latitude, position.coords.longitude]);
     }
   }
@@ -32,22 +31,14 @@ export default function SearchBar(props: SearchBarProps) {
 
   const {ask} = useLocation({successCallback: onPositionUpdated, errorCallback: onPositionError});
 
-  const onClickSearch = () => {
-    if (props.onSearch) {
-      props.onSearch(getValues('search'));
-    }
-  }
-
   const onLoaded = (auto: google.maps.places.Autocomplete) => {
     auto.setFields(['geometry.location', /*'photos'*/]);
     setAutoComplete(auto);
-    console.log('place loaded !');
   }
 
   const onPlaceChanged = () => {
     if (autoComplete && props.onClickUpdateLocation) {
       const place = autoComplete.getPlace();
-      console.log(place);
       if (place.geometry?.location) {
         props.onClickUpdateLocation([place.geometry.location.lat(), place.geometry.location.lng()]);
       }

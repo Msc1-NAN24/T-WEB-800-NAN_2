@@ -1,6 +1,6 @@
 import {API} from "@/utils/api";
 import {ApiError} from "@/utils/type";
-import {DetailQueryDto, PhotoQueryDto, PlaceDetailResponse, PlacesQueryBody, PlacesQueryResponse} from "@/services/PlacesService.type";
+import {DetailQueryDto, DistanceQueryDto, DistanceResponse, PhotoQueryDto, PlaceDetailResponse, PlacesQueryBody, PlacesQueryResponse} from "@/services/PlacesService.type";
 
 export class PlacesService {
 
@@ -8,6 +8,12 @@ export class PlacesService {
     return API.getBlob<String, ApiError>('/places/photo', new URLSearchParams({
       photo_reference: body.photo_reference,
     }))
+  }
+
+  public static getDistance(body: DistanceQueryDto) {
+    return API.get<DistanceResponse[], ApiError>('/places/distance', new URLSearchParams({
+      ...body,
+    }));
   }
 
   public static detail(body: DetailQueryDto) {

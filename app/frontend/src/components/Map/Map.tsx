@@ -1,7 +1,7 @@
 'use client';
 
-import React, {useCallback, useMemo, useRef, useState} from "react";
-import {GoogleMap, Marker, useJsApiLoader, MarkerClusterer} from '@react-google-maps/api';
+import React, {useCallback, useContext, useRef, useState} from "react";
+import {GoogleMap, Marker, MarkerClusterer} from '@react-google-maps/api';
 import SearchBar from "@/components/Map/SearchBar/SearchBar";
 import ActivityCard, {IActivity} from "@/components/Map/ActivityCard/ActivityCard";
 
@@ -9,12 +9,9 @@ import './style.css';
 import MapStyle from "@/styles/map.style";
 import FilterBar, {MapLocation} from "@/components/Map/FilterBar/FilterBar";
 import { motion } from "framer-motion";
-import {set, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {PlacesService} from "@/services/PlacesService";
-
-const activity = {
-  picture: 'https://fffuel.co/images/dddepth-preview/dddepth-307.jpg', title: 'Hôtel le Petit Duquesne', note: 3.8, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur iaculis rutrum tortor, et placerat felis cursus nec. Nam aliquam metus sit amet erat condimentum, a ultricies quam feugiat. Aliquam porta ac nulla sit amet ullamcorper. Duis convallis sed erat nec tincidunt. Sed tellus metus, consectetur vitae accumsan eget, fermentum convallis arcu. Vestibulum ante ipsum primis'
-}
+import {ToastContext} from "@/contexts/ToastContext";
 
 export type Form = {
   location: {
@@ -30,8 +27,14 @@ export type Form = {
 
 const center = [47.2145, -1.5512];
 
-export default function Map() {
+type Props = {
+  activities: any[];
+  onPlanActivities: (activity: any) => void;
+}
 
+export default function Map(props: Props) {
+
+  const {showToast} = useContext(ToastContext);
   const map = useRef<GoogleMap | null>(null);
   const {watch, setValue} = useForm<Form>({defaultValues: {location: {
         lat: center[0],
@@ -66,24 +69,20 @@ export default function Map() {
     setValue('activity.show', true);
     PlacesService.detail({place_id: place.place_id}).then((res) => {
       if (res?.ok?.body?.photos?.length !== undefined && res.ok.body.photos.length > 0) {
-        PlacesService.getPhoto({
-          photo_reference: res?.ok?.body.photos[0].photo_reference ?? '',
-        }).then(async (photo) => {
-          if (res.ok) {
-            setValue('activity.value', {
-              picture: photo,
-              title: res.ok.body.name,
-              note: res.ok.body.rating,
-              description: res.ok.body.business_status
-            })
-          }
-        }).catch(() => {
-          console.log('photo error !');
-        });
+        setValue('activity.value', {
+          place_id: res.ok.body.place_id,
+          picture: res.ok.body.photos.map((a) => a.photo_reference),
+          title: res.ok.body.name,
+          opening_hours: res.ok.body.opening_hours,
+          note: res.ok.body.rating,
+          description: res.ok.body.business_status
+        })
       } else {
         setValue('activity.value', {
-          picture: 'photo',
+          picture: [],
+          place_id: res?.ok?.body.place_id ?? '',
           title: res?.ok?.body.name ?? '',
+          opening_hours: res?.ok?.body.opening_hours,
           note: res?.ok?.body.rating ?? -1,
           description: res?.ok?.body.business_status ?? ''
         })
@@ -116,14 +115,22 @@ export default function Map() {
           {(markerCluster) => <>{markers(markerCluster)}</>}
         </MarkerClusterer>
         <motion.div transition={{ duration: 3, times: [0, 2, 3] }} animate={{display: watch('activity.show') ? '' : 'none'}} className={"z-0 h-full w-full bg-black absolute opacity-20"}/>
-        <FilterBar onPlacesChanged={onPlacesChanged} location={watch('location')} show={!watch('activity.show')} onDatesChanged={onDatesChanged} dates={dates}/>
+        <FilterBar hint={props.activities.length > 0} onPlacesChanged={onPlacesChanged} location={watch('location')} show={!watch('activity.show')} onDatesChanged={onDatesChanged} dates={dates}/>
         <div className={"flex flex-row h-full"}>
           <SearchBar bounds={[0, 0]} onClickUpdateLocation={(pos) => {
             if (map.current?.state.map !== undefined && map.current?.state.map !== null) {
               map.current?.state.map.setCenter({lat: pos[0], lng: pos[1]});
             }
           }}/>
-          <ActivityCard loading={watch('activity.value') === undefined && watch('activity.show')} show={watch('activity.show')} onClose={() => setValue('activity.show', false)} activity={watch('activity.value')} onPlan={() => null}/>
+          <ActivityCard loading={watch('activity.value') === undefined && watch('activity.show')} show={watch('activity.show')} onClose={() => setValue('activity.show', false)} activity={watch('activity.value')} onPlan={(a) => {
+            props.onPlanActivities(a);
+            setValue('activity.show', false);
+/*            showToast({
+              title: 'Hello World',
+              content: 'abc'
+            })*/
+          }
+          }/>
         </div>
       </GoogleMap>
     </div>)
