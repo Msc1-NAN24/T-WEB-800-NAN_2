@@ -24,6 +24,7 @@ export type FilterBarProps = {
     lng: number;
     radius: number;
   };
+  hint: boolean;
   dates: Date[];
   onDatesChanged: (dates: Date[]) => void;
   show: boolean;
@@ -51,7 +52,7 @@ export type FilterForm = {
   places: MapLocation[];
 }
 
-export default function FilterBar({dates, onDatesChanged, show, location, onPlacesChanged}: FilterBarProps) {
+export default function FilterBar({dates, onDatesChanged, show, location, onPlacesChanged, hint}: FilterBarProps) {
 
   const {watch, setValue, getValues} = useForm<FilterForm>({defaultValues: {Bar: false, Activités: false, Restaurant: false, Hotel: false, filterModal: false, places: []}});
 
@@ -80,9 +81,7 @@ export default function FilterBar({dates, onDatesChanged, show, location, onPlac
           setValue('places', current);
           onPlacesChanged(getValues('places'));
         } else {
-          console.log('NOT OK !');
         }
-        console.log(value.ok);
       }).catch((err: unknown) => {
         console.log(err);
       });
@@ -133,8 +132,13 @@ export default function FilterBar({dates, onDatesChanged, show, location, onPlac
   return (
     <div>
       <FilterModal onValid={() => null} open={watch('filterModal')} onDismiss={() => setValue('filterModal', false)}/>
-      <motion.div animate={{ y: show ? 765 : 840 }}>
-        <div className={`absolute mx-auto justify-center bottom-0 w-full z-10 transition-all`}>
+      <motion.div animate={{ y: show ? 765 : 880 }}>
+        {hint ? <div className={"absolute mx-auto text-center mb-10 justify-center bottom-0 w-full z-10 transition-all"}>
+          <div className={"cursor-pointer text-white sm:w-10/12 md:w-10/12 lg:w-10/12 pt-2 xl:w-7/12 bg-primary rounded-t-2xl mx-auto h-20"} onClick={() => window.scroll({top: 800, behavior: 'smooth'})}>
+            Voir les activités planifié
+          </div>
+        </div> : null}
+        <div className={`absolute mx-auto justify-center bottom-0 w-full z-20 transition-all`}>
           <div className={"sm:w-11/12 md:w-11/12 lg:w-11/12 xl:w-8/12 bg-white rounded-t-2xl mx-auto"}>
             <div className={"grid grid-cols-12"}>
               <div className={"col-span-7 flex flex-row gap-4 px-4 py-2 pb-6"}>

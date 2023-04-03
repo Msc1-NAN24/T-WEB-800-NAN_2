@@ -3,7 +3,12 @@
 import {useJsApiLoader} from "@react-google-maps/api";
 import Map from "@/components/Map/Map";
 
-export default function MapLayout() {
+export type Props = {
+  activities: any[];
+  onPlanActivities: (activities: any) => void;
+}
+
+export default function MapLayout({onPlanActivities, activities}: Props) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -12,7 +17,7 @@ export default function MapLayout() {
   })
 
   if (isLoaded) {
-    return <Map/>
+    return <Map activities={activities} onPlanActivities={onPlanActivities}/>
   } else {
     return <></>
   }

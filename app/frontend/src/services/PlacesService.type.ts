@@ -21,6 +21,16 @@ export class DetailQueryDto {
   }
 }
 
+export class DistanceQueryDto {
+  origin: string;
+  destination: string;
+
+  constructor(origin: string, destination: string) {
+    this.origin = origin;
+    this.destination = destination;
+  }
+}
+
 export class PlacesQueryBody {
   location: GeoPoint;
   radius: number;
@@ -227,4 +237,19 @@ export enum Type {
   MealTakeaway = "meal_takeaway",
   PointOfInterest = "point_of_interest",
   Restaurant = "restaurant",
+}
+
+export interface DistanceResponse {
+  elements: Element[];
+}
+
+export interface Element {
+  distance: Distance;
+  duration: Distance;
+  status:   string;
+}
+
+export interface Distance {
+  text:  string;
+  value: number;
 }

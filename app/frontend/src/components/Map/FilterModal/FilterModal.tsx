@@ -36,7 +36,6 @@ export default function FilterModal(props: FilterProps) {
         <div>
           <div className={"flex flex-row gap-4"}>
             <span className={"toggle"} onClick={(event) => {
-              console.log('abc');
             }}/>
             <p>Renvoie uniquement les lieux ouverts</p>
           </div>
