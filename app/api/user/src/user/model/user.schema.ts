@@ -15,7 +15,11 @@ export class User {
   password: string;
   @Prop({ trim: true, index: true, unique: true, sparse: true })
   phone: string;
-  @Prop({ isRequired: false })
+  @Prop({
+    isRequired: false,
+    default:
+      'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
+  })
   picture?: string;
 }
 

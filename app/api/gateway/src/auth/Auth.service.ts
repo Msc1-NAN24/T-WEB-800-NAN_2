@@ -39,7 +39,10 @@ export class AuthService {
 
   async register(createUser: createUserDto) {
     try {
-      const user = await this.userModel.create(createUser);
+      const user = await this.userModel.create({
+        ...createUser,
+        password: await bcrypt.hash(createUser.password, 10),
+      });
       const payload = { username: user.email, sub: user._id };
 
       return {

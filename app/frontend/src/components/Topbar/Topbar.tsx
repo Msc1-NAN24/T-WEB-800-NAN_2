@@ -41,7 +41,7 @@ export default function Topbar() {
     [AvailableButton.Register]: () => onClickRegister(),
     [AvailableButton.Login]: () => onClickLogin(),
     [AvailableButton.Logout]: () => onClickLogout(),
-    [AvailableButton.MyProfile]: () => router.push("/"),
+    [AvailableButton.MyProfile]: () => router.push("/profile"),
   };
 
   return (
@@ -60,22 +60,28 @@ export default function Topbar() {
         onDismiss={() => updateModals("register", false)}
         switchToLogin={() => updateAllModals({ login: true, register: false })}
       />
-      <div className={"flex flex-row items-center w-full p-4"}>
-        <img
-          className={"logo rounded-xl"}
-          alt={"logo"}
-          src={
-            "/atrip.png"
-          }
-          height={80}
-          width={80}
-          title={"Trip"}
+      <div className={"flex flex-row items-center w-full p-4 justify-between "}>
+        <div className="flex flex-row items-center">
+          <img
+            className={"logo rounded-xl"}
+            alt={"logo"}
+            src={"/atrip.png"}
+            height={80}
+            width={80}
+            title={"Trip"}
+          />
+          <ul className={"invisible sm:visible ml-8 flex flex-row gap-10"}>
+            <li className={"text-lg"}>Accueil</li>
+            <li className={"text-lg"}>Mes planifications</li>
+          </ul>
+        </div>
+
+        <LoginSection
+          user={ctx.user}
+          onClickButton={(a) => {
+            actions[a]();
+          }}
         />
-        <ul className={"invisible sm:visible ml-8 flex flex-row gap-10"}>
-          <li className={"text-lg"}>Accueil</li>
-          <li className={"text-lg"}>Mes planifications</li>
-        </ul>
-        <LoginSection user={ctx.user} onClickButton={(a) => {actions[a]()}}/>
       </div>
     </>
   );
