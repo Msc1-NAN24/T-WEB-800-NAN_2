@@ -7,13 +7,10 @@ export class UserService {
     userId: string,
     body: UserUpdate,
     callback: (result: Result<User, ApiError>) => void,
-    options?: RequestInit
+    options: RequestInit = {}
   ) {
-    API.patch<User, ApiError>(
-      `/user/${userId}`,
-      body,
-      (options = {}),
-      (result) => callback(result)
+    API.patch<User, ApiError>(`/user/${userId}`, body, options, (result) =>
+      callback(result)
     );
   }
 
@@ -21,12 +18,12 @@ export class UserService {
     userId: string,
     picture: string | undefined,
     callback: (result: Result<User, ApiError>) => void,
-    options?: RequestInit
+    options: RequestInit = {}
   ) {
     API.patch<User, ApiError>(
       `/user/${userId}`,
       { picture },
-      (options = {}),
+      options,
       (result) => callback(result)
     );
   }
