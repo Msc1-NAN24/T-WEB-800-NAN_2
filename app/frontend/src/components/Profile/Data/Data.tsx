@@ -2,7 +2,7 @@ import React from "react";
 
 const Data = () => {
   return (
-    <div className={""}>
+    <div>
       <div className="rounded-md bg-gray-300 container max-w-lg p-2 h-fit relative">
         <h2 className="text-2xl mb-1 font-bold">
           Vos données sont confidentielles

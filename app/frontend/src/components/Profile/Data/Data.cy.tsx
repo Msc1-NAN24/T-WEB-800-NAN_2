@@ -1,4 +1,4 @@
-import { Data } from "@react-google-maps/api";
+import Data from "@/components/Profile/Data/Data";
 
 describe("Basic <Data />", () => {
   it("renders", () => {
