@@ -31,6 +31,7 @@ export type UserContextType = {
     callback: (res: Result<RegisterResponse, ApiError>) => void
   ) => void;
   onLogout: (callback: () => void) => void;
+  updateUser: (user: User) => void;
 };
 
 export const UserContext = React.createContext<UserContextType>({
@@ -40,6 +41,7 @@ export const UserContext = React.createContext<UserContextType>({
   onLogin: () => null,
   onRegister: () => null,
   onLogout: () => null,
+  updateUser: () => null,
 });
 
 export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
@@ -131,8 +133,15 @@ export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
     );
   }, []);
 
+  const updateUser = useCallback((user: User) => {
+    setValue("user", user);
+    localStorage.setItem("user", JSON.stringify(user));
+  }, []);
+
   return (
-    <UserContext.Provider value={{ ...watch(), onLogin, onRegister, onLogout }}>
+    <UserContext.Provider
+      value={{ ...watch(), onLogin, onRegister, onLogout, updateUser }}
+    >
       {children}
     </UserContext.Provider>
   );

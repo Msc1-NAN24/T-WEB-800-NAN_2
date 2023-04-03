@@ -27,7 +27,7 @@ const Data = () => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_45_90)">
+              <g clipPath="url(#clip0_45_90)">
                 <path
                   d="M35.5505 233.78L41.9167 233.779L44.9456 209.237L35.5493 209.238L35.5505 233.78Z"
                   fill="#FFB8B8"

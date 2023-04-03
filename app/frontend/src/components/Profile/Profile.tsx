@@ -3,6 +3,7 @@ import { AuthState, UserContext } from "@/contexts/UserContext";
 import { useContext, useEffect } from "react";
 import Picture from "@/components/Profile/Picture/Picture";
 import Data from "@/components/Profile/Data/Data";
+import UpdateInfo from "@/components/Profile/UpdateInfo/UpdateInfo";
 
 const Profile = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const Profile = () => {
         <Picture img={user?.picture} />
         <Data />
       </div>
+      <UpdateInfo user={user!} />
     </div>
   );
 };
