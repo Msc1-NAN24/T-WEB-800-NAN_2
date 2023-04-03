@@ -1,13 +1,10 @@
 import { useForm } from "react-hook-form";
-import { User } from "@/utils/type";
 import TextInput from "@/components/Inputs/TextInput/TextInput";
 import React, { FC, useContext, useEffect } from "react";
 import { UserContext } from "@/contexts/UserContext";
 import { validateOrReject } from "class-validator";
 import { UserUpdate } from "@/services/UserService.type";
 import { UserService } from "@/services/UserService";
-
-type props = { user: User };
 
 type Form = {
   email: string;
@@ -16,8 +13,9 @@ type Form = {
   lastName: string;
   picture: string;
 };
-const UpdateInfo: FC<props> = ({ user }) => {
+const UpdateInfo: FC = () => {
   const userCtx = useContext(UserContext);
+  const user = userCtx.user!;
   const {
     watch,
     setValue,
@@ -57,11 +55,20 @@ const UpdateInfo: FC<props> = ({ user }) => {
   };
 
   useEffect(() => {
-    setValue("firstName", user?.firstName);
-    setValue("lastName", user?.lastName);
-    setValue("email", user?.email);
-    setValue("phone", user?.phone);
-  }, [user, setValue]);
+    if (userCtx.user !== undefined) {
+      setValue("firstName", user?.firstName);
+      setValue("lastName", user?.lastName);
+      setValue("email", user?.email);
+      setValue("phone", user?.phone);
+    }
+  }, [
+    userCtx.user,
+    setValue,
+    user?.email,
+    user?.firstName,
+    user?.lastName,
+    user?.phone,
+  ]);
 
   return (
     <div className="form-control mt-1 gap-2">

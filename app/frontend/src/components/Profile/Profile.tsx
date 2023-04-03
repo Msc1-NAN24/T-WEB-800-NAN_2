@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import Picture from "@/components/Profile/Picture/Picture";
 import Data from "@/components/Profile/Data/Data";
 import UpdateInfo from "@/components/Profile/UpdateInfo/UpdateInfo";
+import { Preference } from "@/components/Profile/Preference/Preference";
 
 const Profile = () => {
   const router = useRouter();
@@ -19,11 +20,14 @@ const Profile = () => {
     <div className="mx-20">
       <h1 className="text-4xl">Mon Profile</h1>
       <p className="text-2xl mb-20">Gérer les paramètre de votre profile</p>
-      <div className="flex flex-col lg:flex-row justify-between">
+      <div className="grid grid-cols-1 lg:grid-cols-2 justify-between">
         <Picture img={user?.picture} />
         <Data />
+        <UpdateInfo />
+        <div className={"w-fit"}>
+          <Preference />
+        </div>
       </div>
-      <UpdateInfo user={user!} />
     </div>
   );
 };

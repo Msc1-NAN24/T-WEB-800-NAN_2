@@ -47,7 +47,7 @@ const Picture: FC<pictureProps> = ({ img }) => {
   return (
     <div className="mr-1">
       <h2 className="text-2xl">Votre photo de profile</h2>
-      <div className="flex flex-col md:flex-row justify-center my-3 gap-2 items-center">
+      <div className="flex flex-col md:flex-row my-3 gap-2 items-center">
         <Image
           src={image}
           className="rounded-full bg-gray-500"
