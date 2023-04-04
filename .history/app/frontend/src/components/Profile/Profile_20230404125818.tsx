@@ -89,8 +89,8 @@ const Profile = () => {
             <label
               className="inline-block pl-[0.15rem] hover:cursor-pointer"
               htmlFor="flexSwitchCheckDefault"
-              >Recevoir un mail lors d’une nouvelle plannification
-            </label>
+              >Default switch checkbox input</label
+            >
           </div>
         </div>
         <div className="flex justify-center">
@@ -103,8 +103,8 @@ const Profile = () => {
             <label
               className="inline-block pl-[0.15rem] hover:cursor-pointer"
               htmlFor="flexSwitchCheckDefault"
-              >Me faire un rappel par mail 24h avant mon voyage
-            </label>
+              >Default switch checkbox input</label
+            >
           </div>
         </div>
       </div>
