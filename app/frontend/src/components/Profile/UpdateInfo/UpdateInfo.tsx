@@ -59,15 +59,10 @@ const UpdateInfo: FC = () => {
       setValue("firstName", user?.firstName);
       setValue("lastName", user?.lastName);
       setValue("email", user?.email);
-      setValue("phone", user?.phone);
+      setValue("phone", user?.phone ?? '');
     }
   }, [
     userCtx.user,
-    setValue,
-    user?.email,
-    user?.firstName,
-    user?.lastName,
-    user?.phone,
   ]);
 
   return (

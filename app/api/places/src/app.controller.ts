@@ -1,10 +1,15 @@
 import {Controller, Get, Query} from "@nestjs/common";
-import {AppService, DetailQueryDto, DistanceQueryDto, PhotoQueryDto} from "./app.service";
+import {AppService, DetailQueryDto, DistanceQueryDto, EventPlaceQueryDto, PhotoQueryDto} from "./app.service";
 
 @Controller()
 export class AppController {
 
   constructor(private service: AppService) {
+  }
+
+  @Get('event')
+  public getEvent(@Query() query: EventPlaceQueryDto) {
+    return this.service.getEvent(query);
   }
 
   @Get('detail')

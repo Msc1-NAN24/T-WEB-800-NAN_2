@@ -1,14 +1,12 @@
 "use client";
 
-import LoginSection, {
-  AvailableButton,
-} from "@/components/Topbar/LoginSection/LoginSection";
-import { useContext } from "react";
-import { UserContext } from "@/contexts/UserContext";
-import { useModals } from "@/hooks/useModals";
+import LoginSection, {AvailableButton,} from "@/components/Topbar/LoginSection/LoginSection";
+import {useContext} from "react";
+import {AuthState, UserContext} from "@/contexts/UserContext";
+import {useModals} from "@/hooks/useModals";
 import LoginModal from "@/components/Modals/LoginModal/LoginModal";
 import RegisterModal from "@/components/Modals/RegisterModal/RegisterModal";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 
 type Modals = {
   login: boolean;
@@ -71,8 +69,8 @@ export default function Topbar() {
             title={"Trip"}
           />
           <ul className={"invisible sm:visible ml-8 flex flex-row gap-10"}>
-            <li className={"text-lg"}>Accueil</li>
-            <li className={"text-lg"}>Mes planifications</li>
+            <li className={"text-lg cursor-pointer"} onClick={() => router.push('/')}>Accueil</li>
+            {ctx.state === AuthState.Logged ? <li className={"text-lg cursor-pointer"} onClick={() => router.push('/')}>Mes planifications</li> : null}
           </ul>
         </div>
 

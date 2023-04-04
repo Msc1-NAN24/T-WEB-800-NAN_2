@@ -32,13 +32,14 @@ export default function SearchBar(props: SearchBarProps) {
   const {ask} = useLocation({successCallback: onPositionUpdated, errorCallback: onPositionError});
 
   const onLoaded = (auto: google.maps.places.Autocomplete) => {
-    auto.setFields(['geometry.location', /*'photos'*/]);
+    auto.setFields(['geometry.location', 'name', /*'photos'*/]);
     setAutoComplete(auto);
   }
 
   const onPlaceChanged = () => {
     if (autoComplete && props.onClickUpdateLocation) {
       const place = autoComplete.getPlace();
+      setValue('search', place.name ?? getValues('search'));
       if (place.geometry?.location) {
         props.onClickUpdateLocation([place.geometry.location.lat(), place.geometry.location.lng()]);
       }

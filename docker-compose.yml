@@ -48,6 +48,19 @@ services:
     networks:
       - api
 
+  api-events:
+    container_name: eventsapi
+    build:
+      context: ./app/api/events
+      target: deps
+    command: "pnpm start:dev"
+    ports:
+      - "4004:3000"
+    volumes:
+      - ./app/api/events/:/usr/src/app/
+    networks:
+      - api
+
   api-travel:
     container_name: travelapi
     build:
