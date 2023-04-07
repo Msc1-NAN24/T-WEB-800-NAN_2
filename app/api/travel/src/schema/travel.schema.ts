@@ -8,7 +8,7 @@ export class Travel {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ defaultOptions: false })
   shareable: boolean;
 
   @Prop([])
