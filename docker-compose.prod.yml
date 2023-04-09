@@ -1,0 +1,90 @@
+version: '3.4'
+services:
+  api-gateway:
+    container_name: gateway
+    build:
+      context: ./app/api/gateway
+      target: deps
+    command: "pnpm start:dev"
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./app/api/gateway/:/usr/src/app/
+    networks:
+      - frontend
+      - api
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+  api-user:
+    container_name: apiUser
+    build:
+      context: ./app/api/user
+      target: deps
+    command: "pnpm start:dev"
+    volumes:
+      - ./app/api/user/:/usr/src/app/
+    networks:
+      - api
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+  api-places:
+    container_name: placeapi
+    build:
+      context: ./app/api/places
+      target: deps
+    environment:
+      - GOOGLE_KEY=${GOOGLE_KEY}
+    command: "pnpm start:dev"
+    volumes:
+      - ./app/api/places/:/usr/src/app/
+    networks:
+      - api
+
+  api-travel:
+    container_name: travelapi
+    build:
+      context: ./app/api/travel
+      target: deps
+    command: "pnpm start:dev"
+    volumes:
+      - ./app/api/travel/:/usr/src/app/
+    networks:
+      - api
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./app/frontend
+      target: deps
+    command: "pnpm dev"
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/frontend/:/usr/src/app/
+    networks:
+      - frontend
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - api
+
+networks:
+  frontend:
+  api:
