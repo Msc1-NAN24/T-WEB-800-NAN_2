@@ -45,6 +45,14 @@ class App {
       },
       changeOrigin: true,
     }));
+
+    this._app.use('/events', createProxyMiddleware({
+      target: 'http://172.17.0.1:4004',
+      pathRewrite: {
+        '/events': '/'
+      },
+      changeOrigin: true,
+    }));
   }
 
   start() {

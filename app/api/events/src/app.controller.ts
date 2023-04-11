@@ -1,12 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
+import {Controller, Get, Query} from '@nestjs/common';
 import { AppService } from './app.service';
+
+type EventQuery = {
+  cityName: string;
+}
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {
+
+  }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  public getEvent(@Query() query: EventQuery) {
+    return this.appService.getEvent(query.cityName);
   }
 }

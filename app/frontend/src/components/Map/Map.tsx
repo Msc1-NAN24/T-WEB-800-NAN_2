@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useCallback, useContext, useRef, useState} from "react";
+import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {GoogleMap, Marker, MarkerClusterer} from '@react-google-maps/api';
 import SearchBar from "@/components/Map/SearchBar/SearchBar";
 import ActivityCard, {IActivity} from "@/components/Map/ActivityCard/ActivityCard";
@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 import {useForm} from "react-hook-form";
 import {PlacesService} from "@/services/PlacesService";
 import {ToastContext} from "@/contexts/ToastContext";
+import {LocalEvent} from "@/services/EventsService.type";
+import { toast } from "react-toastify";
 
 export type Form = {
   location: {
@@ -30,11 +32,12 @@ const center = [47.2145, -1.5512];
 type Props = {
   activities: any[];
   onPlanActivities: (activity: any) => void;
+  onLocationChanged: (cityName: string) => void;
+  event?: LocalEvent;
 }
 
 export default function Map(props: Props) {
 
-  const {showToast} = useContext(ToastContext);
   const map = useRef<GoogleMap | null>(null);
   const {watch, setValue} = useForm<Form>({defaultValues: {location: {
         lat: center[0],
@@ -43,8 +46,6 @@ export default function Map(props: Props) {
       }, activity: {value: undefined, show: false}}})
   const [dates, setDates] = useState<Date[]>([new Date(), new Date()]);
   const [places, setPlaces] = useState<MapLocation[]>([]);
-
-
 
   const onLoadMap = useCallback((map: google.maps.Map) => {
     map.setCenter({lat: center[0], lng: center[1]})
@@ -63,6 +64,10 @@ export default function Map(props: Props) {
       (<Marker clusterer={cluster} key={p.place_id} onClick={() => onClickPlace(p)} position={{lat: p.location.lat, lng: p.location.lng}} icon={{url: p.icon, scaledSize: new google.maps.Size(24, 24)}}/>)
     )
   }, [places]);
+
+  const onSearchPlace = useCallback(() => {
+
+  }, []);
 
   const onClickPlace = useCallback((place: MapLocation) => {
     setValue('activity.value', undefined);
@@ -92,6 +97,45 @@ export default function Map(props: Props) {
       console.log(err);
     })
   }, []);
+
+  useEffect(() => {
+    if (props.event !== undefined) {
+      console.log('abc');
+      PlacesService.getEventPlace({name: props.event.name}).then((res) => {
+        console.log(res);
+        if ((res?.ok?.body as any).message !== undefined) {
+          console.log('no data');
+          toast('Pas de localisation pour cet évènements', {
+            type: 'error',
+            theme: "dark"});
+          return;
+        }
+        setValue('activity.show', true);
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        if (res?.ok?.body?.photos?.length !== undefined && res.ok.body.photos.length > 0) {
+          setValue('activity.value', {
+            place_id: res.ok.body.place_id,
+            picture: res.ok.body.photos.map((a) => a.photo_reference),
+            title: res.ok.body.name,
+            opening_hours: res.ok.body.opening_hours,
+            note: res.ok.body.rating,
+            description: res.ok.body.business_status
+          })
+        } else {
+          setValue('activity.value', {
+            picture: [],
+            place_id: res?.ok?.body.place_id ?? '',
+            title: res?.ok?.body.name ?? '',
+            opening_hours: res?.ok?.body.opening_hours,
+            note: res?.ok?.body.rating ?? -1,
+            description: res?.ok?.body.business_status ?? ''
+          })
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [props.event]);
 
   return  (
     <div className={"mx-4 xl:mx-20 rounded-3xl shadow-2xl"} style={{height: 750}}>

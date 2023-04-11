@@ -5,6 +5,14 @@ export type GeoPoint = {
   lng: number;
 };
 
+export class EventPlaceQueryDto {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
 export class PhotoQueryDto {
   photo_reference: string;
 

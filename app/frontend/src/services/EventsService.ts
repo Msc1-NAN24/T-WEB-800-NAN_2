@@ -8,8 +8,8 @@ export class EventsService {
     //API.get<LocalEvent[], ApiError>('/events/', body, {}, (result) => callback(result));
   }
 
-  public static async getByCity(city: string, params?: URLSearchParams): Promise<Result<LocalEvent[], unknown>> {
-    return API.get<LocalEvent[], any>(`/events/${city}`, params);
+  public static async getByCity(city: string): Promise<Result<LocalEvent[], unknown>> {
+    return API.get<LocalEvent[], any>(`/events`, new URLSearchParams({'cityName': city}));
   }
 
 }

@@ -1,5 +1,9 @@
 import {Injectable} from "@nestjs/common";
-import {Client, Language, Status, TravelMode} from "@googlemaps/google-maps-services-js";
+import {Client, Language, PlaceInputType, Status, TravelMode} from "@googlemaps/google-maps-services-js";
+
+export class EventPlaceQueryDto {
+  name: string;
+}
 
 export class DetailQueryDto {
   place_id: string;
@@ -23,6 +27,25 @@ export class AppService {
     this.client = new Client();
   }
 
+  public async getEvent(query: EventPlaceQueryDto) {
+    const res = await this.client.findPlaceFromText({
+      params: {
+        key: process.env.GOOGLE_KEY ?? '',
+        language: Language.fr,
+        input: query.name,
+        fields: ['place_id'],
+        inputtype: PlaceInputType.textQuery,
+      }
+    });
+    if (res.data && res.data.candidates && res.data.candidates.length > 0) {
+      return this.getDetail({place_id: res.data.candidates[0].place_id});
+    } else {
+      return {
+        message: 'NO_DATA'
+      }
+    }
+  }
+
   public async getPhoto(photo: PhotoQueryDto) {
     const res = await this.client.placePhoto({
       params: {
@@ -34,6 +57,14 @@ export class AppService {
       responseType: 'blob',
     });
     return res.data;
+  }
+
+  public async search() {
+    /*this.client.placesNearby({
+      params: {
+
+      }
+    })*/
   }
 
   public async getDetail(query: DetailQueryDto) {

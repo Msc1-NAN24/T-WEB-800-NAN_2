@@ -1,8 +1,14 @@
 import {API} from "@/utils/api";
 import {ApiError} from "@/utils/type";
-import {DetailQueryDto, DistanceQueryDto, DistanceResponse, PhotoQueryDto, PlaceDetailResponse, PlacesQueryBody, PlacesQueryResponse} from "@/services/PlacesService.type";
+import {DetailQueryDto, DistanceQueryDto, DistanceResponse, EventPlaceQueryDto, PhotoQueryDto, PlaceDetailResponse, PlacesQueryBody, PlacesQueryResponse} from "@/services/PlacesService.type";
 
 export class PlacesService {
+
+  public static getEventPlace(body: EventPlaceQueryDto) {
+    return API.get<PlaceDetailResponse, ApiError>('/places/event', new URLSearchParams({
+      ...body,
+    }));
+  }
 
   public static getPhoto(body: PhotoQueryDto) {
     return API.getBlob<String, ApiError>('/places/photo', new URLSearchParams({
